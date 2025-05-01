@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buying Page - Moccha Latte</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <!-- Header -->
+  <div class="bg-white flex items-center justify-between p-4 shadow">
+    <img src="logo.png" alt="Logo" class="h-8" />
+    <input type="text" placeholder="Search Product" class="w-1/2 px-4 py-2 rounded-full border border-gray-300" />
+    <div class="flex items-center space-x-4">
+      <img src="notif-icon.png" alt="Notif" class="h-6" />
+      <img src="user.png" alt="User" class="h-8 w-8 rounded-full" />
+    </div>
+  </div>
+
+  <!-- Back button -->
+  <div class="p-4">
+    <button class="text-2xl">&#8592;</button>
+  </div>
+
+  <!-- Product Section -->
+  <div class="bg-white mx-4 p-6 rounded-xl shadow-lg">
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Image -->
+      <img src="moccha-latte.jpg" alt="Moccha Latte" class="w-full rounded-xl object-cover" />
+
+      <!-- Info -->
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Moccha Latte</h2>
+        <p class="text-sm mb-2">Bahan: 100% Moccha Latte (Komposisi: 100% Campuran Kopi Mocha)<br>
+        Komposisi: 60% Kopi Bubuk, 25% Susu Bubuk, 15% Cokelat Bubuk untuk rasa kaya, creamy, dan aroma khas.</p>
+
+        <!-- Stars -->
+        <div class="flex space-x-1 my-2">
+          <span class="text-gray-300 text-xl">★★★★★</span>
+        </div>
+
+        <!-- Harga dan Durasi -->
+        <p class="text-yellow-600 text-2xl font-bold">Rp 10.000</p>
+        <p class="text-sm text-gray-500">Lama Pembuatan: 7–8 Menit</p>
+
+        <!-- Kuantitas -->
+        <div class="flex items-center mt-4 space-x-2">
+          <span class="font-semibold">Kuantitas</span>
+          <div class="flex items-center border rounded px-2 py-1 space-x-2">
+            <button class="text-xl">-</button>
+            <span>1</span>
+            <button class="text-xl">+</button>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="flex items-center mt-4 space-x-4">
+          <button class="bg-green-500 text-white font-bold py-2 px-6 rounded-full">Beli Sekarang</button>
+          <button class="text-green-600 text-2xl">&#128722;</button>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="flex mt-4 space-x-2">
+          <img src="thumb1.jpg" class="w-16 h-16 rounded-lg object-cover" />
+          <img src="thumb2.jpg" class="w-16 h-16 rounded-lg object-cover" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="mx-4 mt-6">
+    <div class="flex space-x-4 text-sm font-semibold">
+      <button class="text-green-600 border-b-2 border-green-600 pb-1">Deskripsi Produk</button>
+      <button class="text-gray-400">Spesifikasi</button>
+      <button class="text-gray-400">Ulasan</button>
+    </div>
+    <div class="bg-white mt-2 p-4 rounded-xl shadow">
+      <p class="text-sm text-gray-700">
+        Perpaduan espresso pekat, cokelat manis, dan susu lembut, menciptakan harmoni rasa yang hangat dan menggoda.
+        Setiap tegukan bagaikan puisi pagi—aroma yang menarik, pahit yang berbisik, dan manis yang menghangatkan jiwa.
+      </p>
+    </div>
+  </div>
+
+  <!-- Rekomendasi -->
+  <div class="mx-4 mt-8">
+    <h3 class="text-xl font-bold mb-4">Rekomendasi Lainnya</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <!-- Item -->
+      <div class="bg-white p-4 rounded-xl shadow">
+        <img src="moccha-latte.jpg" class="w-full h-40 object-cover rounded-lg" />
+        <div class="mt-2 text-sm text-gray-600 flex justify-between">
+          <span>2-3x min</span>
+          <span>4.1 ★ • 8 Ulasan</span>
+        </div>
+        <h4 class="font-semibold mt-1">Moccha Latte</h4>
+        <p class="text-gray-700 font-bold">Rp 10.000</p>
+      </div>
+      <!-- Copy dua lagi jika ingin tampil tiga kolom -->
+      <div class="bg-white p-4 rounded-xl shadow">
+        <img src="moccha-latte.jpg" class="w-full h-40 object-cover rounded-lg" />
+        <div class="mt-2 text-sm text-gray-600 flex justify-between">
+          <span>2-3x min</span>
+          <span>4.1 ★ • 8 Ulasan</span>
+        </div>
+        <h4 class="font-semibold mt-1">Moccha Latte</h4>
+        <p class="text-gray-700 font-bold">Rp 10.000</p>
+      </div>
+      <div class="bg-white p-4 rounded-xl shadow">
+        <img src="moccha-latte.jpg" class="w-full h-40 object-cover rounded-lg" />
+        <div class="mt-2 text-sm text-gray-600 flex justify-between">
+          <span>2-3x min</span>
+          <span>4.1 ★ • 8 Ulasan</span>
+        </div>
+        <h4 class="font-semibold mt-1">Moccha Latte</h4>
+        <p class="text-gray-700 font-bold">Rp 10.000</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

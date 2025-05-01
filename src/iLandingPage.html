@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nirantara Caffe</title>
+  <link href="./output.css" rel="stylesheet">  
+  <script src="main.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F2EF] text-gray-800">
+
+  <!-- Navbar -->
+<nav class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-gray-100 shadow-md">
+
+  <div class="text-xl font-bold">
+    <img class="w-12 h-12 rounded-full object-cover" src="image/Nirantara Coffe.png" alt="LOGO">
+  </div>
+
+  <ul class="flex gap-6 text-1xl text-gray-800">
+    <li><a href="#Home" class="hover:text-green-600">Home</a></li>
+    <li><a href="#AboutUs" class="hover:text-green-600">About Us</a></li>
+    <li><a href="#Product" class="hover:text-green-600">Product</a></li>
+    <li><a href="#Benefit" class="hover:text-green-600">Benefits</a></li>
+    <li><a href="#Testimoni" class="hover:text-green-600">Testimoni</a></li>
+  </ul>
+
+  <div class="flex gap-2">
+    <button class="bg-lime-500 text-white px-4 py-2 rounded-full text-sm shadow hover:bg-lime-600">Login</button>
+    <button class="bg-white text-gray-800 px-4 py-2 rounded-full text-sm shadow hover:bg-gray-100">Sign Up</button>
+  </div>
+</nav>
+
+<!-- YANG HOME HOME AJAH -->
+<section class="relative w-full max-w-[95.1rem] h-[40.2rem] mx-auto mt-1">
+  <img src="image/Peppermint-Matcha-Latte.jpg" alt="Nirantara Caffe" class="w-full h-full object-cover rounded-md shadow-md" />
+         
+  <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white rounded-md ">
+      <h2 class="text-4xl font-bold italic drop-shadow ">Nirantara Caffe</h2>
+      <p class="text-2xl mt-1 drop-shadow">Feel the Art of Coffee</p>
+  </div>
+</section>  
+
+  <!-- HOME PART 2 -->
+  <section id="Home" class="px-6 py-50 bg-[#f3ecdf]">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-12 max-w-7xl mx-auto">
+      <div class="relative">
+        <div class="absolute inset-0 w-full h-full rounded-full bg-green-400 blur-2xl opacity-70 scale-110 z-0"></div>
+        <img src="image/pngegg (1).png" alt="Coffee Cup" class="h-64 w-auto relative z-10" />
+      </div>
+
+      <div class="flex-1 text-center md:text-left md:ml-24 lg:ml-32">
+        <h2 class="text-3xl md:text-4xl font-bold text-yellow-600 leading-snug">
+          Segarkan harimu dengan<br />
+          nikmat kopi sesungguhnya!
+        </h2>
+        <p class="mt-4 text-green-700 text-base md:text-lg leading-relaxed max-w-xl">
+          “Rasakan kelezatan setiap tegukan yang diracik sempurna untuk menemani langkahmu. Tak perlu menunggu lama, kopi favoritmu siap memberi semangat kapan saja. Nikmati kesempurnaan rasa yang akan membuat harimu lebih berarti!”
+        </p>
+      </div>
+    </div>
+  </section>
+  
+<!-- Our Story -->
+<section id="AboutUs" class="px-6 py-36 bg-[#f8f6f1]">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-7xl mx-auto items-center">
+    
+    <!-- Gambar: muncul duluan di mobile, pindah ke kanan di desktop -->
+    <div class="flex justify-center md:justify-end md:order-last">
+      <img src="image/pngtree-close-up-of-a-young-asian-female-barista-hold-a-cup-photo-image_3070691.jpg" 
+           alt="Barista" 
+           class="w-full max-w-sm rounded-2xl shadow-md object-cover" />
+    </div>
+
+    <div>
+      <h3 class="text-xl md:text-2xl font-semibold text-yellow-600 mb-4">Our Story</h3>
+      <p class="text-gray-800 leading-relaxed text-base md:text-lg">
+        Di tengah alunan waktu yang tenang, aroma kopi Nirantara merebak seperti pelukan hangat yang mengisi ruang. Kami ingin menghadirkan tempat di mana setiap seduhan menyampaikan cerita, dan setiap tegukan membisikkan kehangatan yang melintasi batas.
+        <br><br>
+        Di sini, harmoni rasa dan aroma bersatu, menghubungkan jiwa-jiwa yang mencari kelegaan dalam setiap cangkir. Di setiap sudut, percakapan hangat tercipta, seperti riak keintiman yang mengalir tanpa henti.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- OUR CULTURE SECTION -->
+ 
+<section id="Product" class="px-6 py-12 bg-[#f3ecdf]">
+  <h2 class="text-3xl font-bold text-center mb-10 text-black">OUR CULTURE</h2>
+
+  <!-- Scrollable Container -->
+  <div id="cultureScroll" class="overflow-x-auto scroll-smooth whitespace-nowrap -mx-4 px-4" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
+    <div class="flex gap-6 w-max">
+
+      <!-- Card -->
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
+        <div class="p-4 text-center">
+          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
+          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
+          <p class="text-black font-bold">Rp 10.000</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tombol Scroll -->
+  <div class="flex justify-center gap-6 mt-6">
+    <button id="scrollLeft" class="bg-white px-6 py-3 rounded-full shadow hover:bg-yellow-200 transition text-xl">◀</button>
+    <button id="scrollRight" class="bg-white px-6 py-3 rounded-full shadow hover:bg-yellow-200 transition text-xl">▶</button>
+  </div>
+
+  <!-- Info Scroll di Mobile -->
+  <p class="text-center text-xs text-gray-500 mt-2">Geser atau klik tombol untuk lihat lebih banyak ➡️</p>
+</section>
+
+  <!-- Benefits -->
+  <section id="Benefit" class="px-6 py-40 bg-[#f8f6f1]">
+    <div class="flex flex-col-reverse md:flex-row items-center gap-12 max-w-7xl mx-auto">
+
+      <div class="flex-1 text-center md:text-left md:mr-24 lg:mr-32">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 leading-snug mb-6">
+          Kenapa harus beli <br />
+          produk kami?
+        </h2>
+        <ul class="space-y-4 text-base md:text-lg text-gray-700">
+          <li class="flex items-center justify-center md:justify-start">
+            <span class="text-2xl mr-3">☕</span> Otentik
+          </li>
+          <li class="flex items-center justify-center md:justify-start">
+            <span class="text-2xl mr-3">🍒</span> Berkualitas
+          </li>
+          <li class="flex items-center justify-center md:justify-start">
+            <span class="text-2xl mr-3">🍵</span> Premium
+          </li>
+        </ul>
+      </div>
+  
+      <div class="relative">
+        <div class="absolute inset-0 w-full h-full rounded-full bg-green-400 blur-2xl opacity-70 scale-110 z-0"></div>
+        <img src="image/pngegg (2).png" alt="Cappuccino" class="h-64 w-auto relative z-10" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimoni -->
+  <section id="Testimoni" class="px-6 py-12 bg-[#f3ecdf]">
+    <h2 class="text-3xl font-bold text-center mb-12 text-black">Testimoni</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      
+      <!-- Card 1 -->
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300 text-center">
+        <img src="image/Mark_Zuckerberg_F8_2019_Keynote_(32830578717)_(cropped).jpg" alt="Mark Zuckerberg"
+             class="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+        <h3 class="font-bold text-lg text-black">Mark Zuckerberg</h3>
+        <div class="flex justify-center mt-2 mb-4 text-yellow-400 text-lg">★★★★★</div>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          "Cappuccino di Nirantara Caffe sempurna—seimbang dan penuh karakter. Rasanya seperti dirancang untuk fokus dan produktivitas."
+        </p>
+      </div>
+  
+      <!-- Card 2 -->
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300 text-center">
+        <img src="image/crawl-20241205193834393.jpg" alt="Jensen Huang"
+             class="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+        <h3 class="font-bold text-lg text-black">Jensen Huang</h3>
+        <div class="flex justify-center mt-2 mb-4 text-yellow-400 text-lg">★★★★★</div>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          "Americano di Nirantara Caffe itu seperti RTX 4090 yang indah, presisi, dan sempurna. Suasana nikmatnya sangat menginspirasi!"
+        </p>
+      </div>
+  
+      <!-- Card 3 -->
+      <div class="bg-white p-6 rounded-xl shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300 text-center">
+        <img src="image/Elon-Musk-Twitter-Lawsuit.webp" alt="Elon Musk"
+             class="w-20 h-20 rounded-full mx-auto mb-4 object-cover" />
+        <h3 class="font-bold text-lg text-black">Elon Musk</h3>
+        <div class="flex justify-center mt-2 mb-4 text-yellow-400 text-lg">★★★★★</div>
+        <p class="text-sm text-gray-700 leading-relaxed">
+          "Kopi di Nirantara Caffe presisi sekali, bagaikan peluncuran roket SpaceX. Cafe au Lait mereka? Luar biasa energik!"
+        </p>
+      </div>
+  
+    </div>
+  </section>
+  
+  <section class="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#e8d1be] to-[#a9f8cf] px-6 py-12">
+    <div class="max-w-6xl w-full flex flex-col md:flex-row items-center justify-between gap-12">
+
+      <div class="flex-1 text-left">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 leading-snug mb-4">
+          Nikmati Kopimu<br><span class="text-black">dalam sekali Antri</span>
+        </h1>
+        <p class="text-gray-800 text-lg mb-6 max-w-md">
+          Pesan kopi favoritmu dengan mudah dan cepat langsung dari aplikasi kami.
+          Klik sekarang dan rasakan kemudahan membeli kopi hanya dengan beberapa sentuhan!
+        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          <img src="image\images (2).png" alt="Windows" class="h-12 rounded-2xl px-2 py-1 transition duration-300 ease-in-out transform hover:scale-110 hover:rotate-2 hover:shadow-lg" />
+          
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="h-10 transition duration-300 ease-in-out transform hover:scale-110 hover:rotate-2 hover:shadow-lg" />
+          
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" class="h-10 transition duration-300 ease-in-out transform hover:scale-110 hover:rotate-2 hover:shadow-lg" />
+        </div>
+        
+      </div>
+      
+      <div class="flex-1 flex items-end justify-center relative">
+        <!-- Wrapper biar laptop & hp bisa berjejer -->
+        <div class="relative flex items-end gap-4">
+          <!-- HP kecil di kiri -->
+          <img src="image\Screenshot_2025-04-15_215910-removebg-preview.png" 
+               alt="Phone Preview" 
+               class="w-[80px] md:w-[100px] lg:w-[110px] z-20" />
+  
+          <!-- Laptop besar -->
+          <img src="image/Screenshot_2025-04-15_211934-removebg-preview.png" 
+               alt="Laptop Preview" 
+               class="w-[260px] md:w-[340px] lg:w-[400px] z-10" />
+        </div>
+      </div>
+  
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black px-6 py-6 text-sm text-center text-white">
+    <p class="mb-2">Nusantara Cafe &copy; 2025 - All rights reserved</p>
+    <div class="flex justify-center gap-4">
+      <a href="#">Instagram</a>
+      <a href="#">Twitter</a>
+      <a href="#">Facebook</a>
+    </div>
+  </footer>
+</body>
+</html>
