@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Profile Page</title>
   <link href="./output.css" rel="stylesheet">  
     <script src="main.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,22 +35,104 @@
       </a>
   </div>
 
-  <div class="flex-1 p-10">
-    <div class="mb-4">
-      <div class="bg-white p-10 rounded-4xl ">
-      <img src="image\Suiseiii pp.jpg" class="w-100 h-100 rounded-full ml-100" />
+  
+  <main class="flex-1 flex justify-center items-start p-10">
+    <div class="w-full max-w-3xl bg-white rounded-3xl shadow p-10">
+      <h1 class="text-2xl font-semibold text-center mb-10">Profil Akun</h1>
 
-      <div class=" items-center text-sm mb-2 mt-20 grid grid-flow-col grid-rows-3 gap-6  ">
-          <input type="text" placeholder="Input Name" class="mt-4 w-full border-2 rounded-2xl py-3 px-4 outline-none ">
-          <input type="text" placeholder="Input Name" class="mt-4 w-full border-2 rounded-2xl py-3 px-4 outline-none">
-          <input type="text" placeholder="Input Name" class="mt-4 w-full border-2 rounded-2xl py-3 px-4 outline-none">
-          <input type="text" placeholder="Input Name" class="mt-4 w-full border-2 rounded-2xl py-3 px-4 outline-none">
-          <input type="text" placeholder="Input Name" class="mt-4 w-full border-2 rounded-2xl py-3 px-4 outline-none">
-          <input type="text" placeholder="Input Name" class="mt-4 w-full border-2 rounded-2xl py-3 px-4 outline-none">
+      <!-- Gambar Profil -->
+      <div class="flex justify-center mb-10 relative">
+        <img src="image/Suiseiii pp.jpg" class="w-48 h-48 rounded-full object-cover" />
+        <div class="absolute bottom-2 right-[38%] bg-gray-200 p-4 rounded-full shadow cursor-pointer">
+          ✏️
+        </div>
+      </div>
+
+      <!-- Form Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- First Name -->
+        <div>
+          <label class="flex justify-between text-sm mb-1">
+            First Name <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+          </label>
+          <div class="flex items-center border-2 border-blue-500 rounded-md px-3 py-2">
+            <input type="text" value="Suisei" class="flex-1 outline-none bg-transparent" readonly />
+            <span>👤</span>
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div>
+          <label class="flex justify-between text-sm mb-1">
+            Last Name <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+          </label>
+          <div class="flex items-center border-2 border-blue-500 rounded-md px-3 py-2">
+            <input type="text" value="Hoshimachi" class="flex-1 outline-none bg-transparent" readonly />
+            <span>👤</span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="flex justify-between text-sm mb-1">
+            Email <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+          </label>
+          <div class="flex items-center border-2 border-pink-400 rounded-md px-3 py-2">
+            <input type="text" value="suiseihoshimachi@gmail.com" class="flex-1 outline-none bg-transparent" readonly />
+            <span>💌</span>
+          </div>
+        </div>
+
+        <!-- Telephone Number -->
+        <div>
+          <label class="flex justify-between text-sm mb-1">
+            Telephone Number <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+          </label>
+          <div class="flex items-center border-2 border-pink-400 rounded-md px-3 py-2">
+            <input type="text" value="+8132365476834" class="flex-1 outline-none bg-transparent" readonly />
+            <span>📞</span>
+          </div>
+        </div>
+
+        <!-- Tanggal Lahir -->
+        <div>
+          <label class="flex justify-between text-sm mb-1">
+            Tanggal Lahir <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+          </label>
+          <div class="flex items-center border-2 border-purple-400 rounded-md px-3 py-2">
+            <input type="text" value="22 Maret" class="flex-1 outline-none bg-transparent" readonly />
+            <span>📅</span>
+          </div>
+        </div>
+
+        <!-- Negara -->
+        <div>
+          <label class="flex justify-between text-sm mb-1">
+            Negara <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+          </label>
+          <div class="flex items-center border-2 border-green-400 rounded-md px-3 py-2">
+            <input type="text" value="Japan" class="flex-1 outline-none bg-transparent" readonly />
+            <span>✅</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+
+        
+        </div>
       </div>
 
       </div>
     </div>
+  </div>
+  
+
+
+
 
 
 </div>

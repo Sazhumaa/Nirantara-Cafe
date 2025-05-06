@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="main.js"></script>
+    <link href="./output.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">  
 </head>
 <body class="bg-gray-100 font-sans">
+  
+
+  <style>
+    /* Custom active underline to match hover underline */
+    .nav-menu.active::after {
+      transform: translateX(0) !important;
+    }
+  </style>
 
     <div class="flex min-h-screen">
     
@@ -52,24 +59,23 @@
         </div>
 
         <!-- Kategori -->
-        <div class="flex items-center justify-center gap-2 mb-5">
-            <div class="rounded-2xl bg-gray-500 p-2">
-                <span class="text-black  m-2 text-center">Semua</span>
-            </div>
-            <div class="rounded-2xl  p-2">
-                <span class="text-black  m-2 text-center">Moccha</span>
-            </div>
-            <div class="rounded-2xl  p-2">
-                <span class="text-black  m-2 text-center">Americano</span>
-            </div>
-            <div class="rounded-2xl  p-2">
-                <span class="text-black  m-2 text-center">Cappuccino</span>
-            </div>
-            <div class="rounded-2xl  p-2">
-                <span class="text-black  m-2 text-center">Espreso</span>
-            </div>
-        </div>
-        
+        <div id="navContainer" class="flex items-center justify-center gap-2 mb-5">
+          <div class="nav-menu rounded-2xl bg-[#D9D9D9] p-2">
+              <span class="cursor-pointer text-black m-2 text-center">Semua</span>
+          </div>
+          <div class="nav-menu rounded-2xl p-2 hover:bg-[#D9D9D9]">
+              <span class="cursor-pointer text-black m-2 text-center">Moccha</span>
+          </div>
+          <div class="nav-menu rounded-2xl p-2 hover:bg-[#D9D9D9]">
+              <span class="cursor-pointer text-black m-2 text-center">Americano</span>
+          </div>
+          <div class="nav-menu rounded-2xl p-2 hover:bg-[#D9D9D9]">
+              <span class="cursor-pointer text-black m-2 text-center">Cappuccino</span>
+          </div>
+          <div class="nav-menu rounded-2xl p-2 hover:bg-[#D9D9D9]">
+              <span class="cursor-pointer text-black m-2 text-center">Espreso</span>
+          </div>
+      </div>        
 
         <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
       
@@ -170,5 +176,9 @@
 
 
 </div>
+
+
+
+<script src="menu.js"></script>
 </body>
 </html>
