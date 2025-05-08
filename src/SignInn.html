@@ -3,30 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Sign In</title>
   <link href="./output.css" rel="stylesheet">  
     <script src="main.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">  
 </head>
-<body class="bg-blue-300 font-sans min-h-screen flex items-center justify-center  ">
-    <div class=" bg-amber-50 max-w-2xl border-2 flex justify-center ">
-        <div class="p-10">
-                <div class="flex ">
-                    <label for="" class="col-end-1">Nama</label>
-                    <input type="text" value="Makan banng" class="border-2" readonly>
+
+    <body class="flex min-h-screen justify-center items-center bg-gray-300">
+
+        <div class="bg-white max-w-3xl p-5 text-sm rounded-2xl shadow-2xl ">
+            
+            <div class="text-center">
+                <span class="text-3xl font-bold">Welcome</span>
+            </div>
+
+
+            <div class="p-10">
+                <div class="mb-2">
+                    <label for="" class="">Nama</label>
+                    <input type="email" class="w-full mt-1 border rounded-2xl p-2 border-gray-400">
+                </div>  
+                <div class="">
+                    <label for="" class="">Password</label>
+                    <input type="password" class="w-full border rounded-2xl p-2 border-gray-400">
                 </div>
-                <div class="flex ">
-                    <label for="">Kelas</label>
-                    <input type="text" value="" class="border-2" readonly>
+
+                <!-- Button -->
+                 
+                <div class="bg-blue-400 p-3 rounded-2xl mt-4 text-center">  
+                    <button class="text-white font-boldt 55">SignIn</button>
                 </div>
-                <div>
-                    <label for=""></label>
-                    <input type="text" value="" readonly>
-                </div>
+            
         </div>
-    </div>
-
-
 </body>
