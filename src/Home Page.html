@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
   <link href="./output.css" rel="stylesheet">  
-    <script src="main.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">  
@@ -60,100 +60,16 @@
 
     <!-- Rekomendasi Menu -->
     <h3 class="text-xl font-semibold mb-4">Rekomendasi Menu</h3>
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+  
+
+  <div class="max-w-7xl mx-auto">
+    <div id="coffee-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    <div id="error-message" class="text-red-500 mt-4 text-center hidden">Gagal mengambil data dari API.</div>
+  </div>
+
+      
       
       <!-- Menu Card -->
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\Peppermint-Matcha-Latte.jpg" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\latte-macchiato-245477_1280.jpg" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
-      <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-        <img src="image\americano_coffee_1024x.webp" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-        <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-          ⭐ 4.5 | 1k Rating
-        </div>
-        <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-        <p class="text-gray-700">Rp 10.000</p>
-      </div>
 
 
 
@@ -162,6 +78,6 @@
   </div>
 
 </div>
-
+    <script src="Home Page.js"></script>
 </body>
 </html>
