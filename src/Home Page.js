@@ -82,7 +82,7 @@ async function fetchProducts() {
         const products = await response.json();
         displayProducts(products);
     } catch (error) {
-        console.error('Ada masalah dengan fetch:', error);
+        console.error('Ada masalah ama fetchnya:', error);
         document.getElementById('error-message').classList.remove('hidden');
     }
 }
@@ -93,7 +93,10 @@ function displayProducts(products) {
     const productList = document.getElementById('coffee-container');
     productList.innerHTML = ''; // Kosongkan daftar produk sebelumnya
 
-    products.forEach(product => {
+    // Ambil hanya 6 produk pertama
+    const limitedProducts = products.slice(0, 8);
+
+    limitedProducts.forEach(product => {
         const productDiv = document.createElement('div');
         productDiv.className = 'bg-white rounded-xl shadow-md p-4 flex flex-col hover:shadow-lg transition-shadow duration-200';
 
@@ -117,4 +120,5 @@ function displayProducts(products) {
         productList.appendChild(productDiv);
     });
 }
+
 
