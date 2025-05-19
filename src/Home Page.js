@@ -2,7 +2,7 @@
   const container = document.getElementById('coffee-container');
   const errorMessage = document.getElementById('error-message');
 
-  fetch('http://localhost:3000/products')
+  fetch('https://fakestoreapi.com/products')
     .then(response => {
       if (!response.ok) throw new Error('Network response was not ok');
       return response.json();
