@@ -34,8 +34,8 @@ function displayProducts(products) {
         productDiv.className = 'bg-white rounded-xl shadow-md p-4 flex flex-col hover:shadow-lg transition-shadow duration-200';
 
         // Tambahkan link ke buying.html?id=xxx
-        productDiv.innerHTML = `
-            <a href="Buying Page.html?id=${product._id}" class="block">
+productDiv.innerHTML = `
+            <a href="Buying Page.html?name=${encodeURIComponent(product.nama_produk)}" class="block">
                 <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full h-40 object-contain mb-4 rounded-md">
                 
                 <p class="text-xs text-gray-500 mb-1">21–25 min</p>
