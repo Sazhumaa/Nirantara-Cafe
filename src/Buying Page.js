@@ -125,39 +125,63 @@ function displayProduct(product) {
     container.innerHTML = ''; // Clear previous content
 
     const productCard = `
-        <section class="bg-white mx-4 md:mx-10 p-6 rounded-xl shadow-lg mt-5">
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="flex justify-center">
-                    <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full max-w-xs h-auto rounded-xl object-cover p-10 mb-10" />
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold mb-2">${product.nama_produk}</h2>
-                    <p class="text-sm mb-2">Bahan: ${product.kategori_produk}<br>
-                    Komposisi: ${product.lama_pembuatan}</p>
+<div class="flex justify-center items-center  bg-gray-100 ">
+  <div class="bg-white rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-7xl overflow-hidden">
+    
+    <!-- Container Gambar -->
+    <div class="md:w-1/2 bg-white p-6 flex justify-center items-center">
+      <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="max-w-full h-auto rounded-xl">
+    </div>
 
-                    <div class="flex space-x-1 my-2">
-                        <span class="text-yellow-400 text-xl">★★★★★</span>
-                    </div>
+    <!-- Container Detail & Pembelian -->
+    <div class="md:w-1/2 p-6 flex flex-col justify-between">
+      <div>
+        <h2 class="text-2xl font-bold mb-2">${product.nama_produk}</h2>
+        <p class="mb-1 text-sm"><span class="font-semibold">Bahan:</span> ${product.kategori_produk}</p>
+        <p class="mb-1 text-sm"><span class="font-semibold">Komposisi:</span> ${product.lama_pembuatan}</p>
 
-                    <p class="text-yellow-600 text-2xl font-bold">Rp ${product.harga_produk}</p>
-                    <p class="text-sm text-gray-500">Lama Pembuatan: ${product.lama_pembuatan}</p>
+        <!-- Rating -->
+        <div class="flex space-x-1 my-2 text-yellow-500 text-xl">
+          ★★★★★
+        </div>
 
-                    <div class="flex items-center mt-4 space-x-2">
-                        <span class="font-semibold">Kuantitas</span>
-                        <div class="flex items-center border rounded px-2 py-1 space-x-2">
-                            <button class="text-xl">-</button>
-                            <span>1</span>
-                            <button class="text-xl">+</button>
-                        </div> 
-                      </div>
+        <!-- Harga -->
+        <p class="text-2xl text-yellow-600 font-bold">Rp ${product.harga_produk}</p>
+        <p class="text-sm text-gray-500 mb-2">Lama Pembuatan: ${product.lama_pembuatan}</p>
 
-                        <div class=" w-52 bg-green-500 rounded-2xl p-3 mt-7 text-center hover:bg-green-400">
-                          <button class=" text-center text-white text-2xl font-bold"> Beli sekarang </button>
-                        </div>
+        <!-- Info tambahan -->
+        <ul class="text-sm text-gray-600 space-y-1 mb-4">
+          <li>🎁 Gratis ongkir ke seluruh Indonesia</li>
+          <li>🚚 Estimasi kirim: 1-2 hari</li>
+          <li class="text-green-600">🔥 Promo terbatas hari ini!</li>
+        </ul>
 
-                </div>
-            </div>
-        </section>
+        <!-- Kuantitas -->
+        <div class="flex items-center space-x-3 mb-4">
+          <span class="font-semibold">Kuantitas</span>
+          <div class="flex items-center border rounded px-3 py-1">
+            <button class="text-lg font-bold px-2">-</button>
+            <span class="px-2">1</span>
+            <button class="text-lg font-bold px-2">+</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Aksi -->
+      <div class="flex space-x-3 mt-4">
+        <button class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">Beli Sekarang</button>
+        <button class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
+          <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6">
+        </button>
+        <button class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
+          <img src="image/wishlist-Putih.png" alt="Wishlist" class="w-6 h-6">
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
     `;
     container.innerHTML = productCard; // Append the product card to the container
 }
