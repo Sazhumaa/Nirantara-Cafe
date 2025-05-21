@@ -89,20 +89,21 @@ async function fetchProducts() {
 
 window.onload = fetchProducts;
 
+// Function to display products in card format
 function displayProducts(products) {
     const productList = document.getElementById('coffee-container');
     productList.innerHTML = ''; // Kosongkan daftar produk sebelumnya
 
-    // Ambil hanya 6 produk pertama
+    // Ambil hanya 8 produk pertama
     const limitedProducts = products.slice(0, 8);
 
     limitedProducts.forEach(product => {
         const productDiv = document.createElement('div');
         productDiv.className = 'bg-white rounded-xl shadow-md p-4 flex flex-col hover:shadow-lg transition-shadow duration-200';
 
-        // Tambahkan link ke buying.html?id=xxx
+        // Tambahkan link ke buying.html?name=xxx
         productDiv.innerHTML = `
-            <a href="Buying Page.html?id=${product._id}" class="block">
+            <a href="Buying Page.html?name=${encodeURIComponent(product.nama_produk)}" class="block">
                 <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full h-40 object-contain mb-4 rounded-md">
                 
                 <p class="text-xs text-gray-500 mb-1">21–25 min</p>
@@ -123,43 +124,3 @@ function displayProducts(products) {
         productList.appendChild(productDiv);
     });
 }
-
-
-// ================================
-// BAGIAN BUYING PAGE DETAIL PRODUK
-// ================================
-
-// Ambil ID dari URL
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get('id');
-
-async function fetchProdukById(id) {
-    try {
-        const response = await fetch(`${url_api}/${id}`);
-        if (!response.ok) throw new Error('Produk tidak ditemukan');
-
-        const produk = await response.json();
-        tampilkanDetailProduk(produk);
-    } catch (err) {
-        console.error(err);
-        const container = document.getElementById('produk-container');
-        if (container) {
-            container.innerHTML = '<p class="text-red-500">Produk tidak ditemukan.</p>';
-        }
-    }
-}
-
-function tampilkanDetailProduk(produk) {
-    document.getElementById('produk-gambar').src = produk.gambar_produk;
-    document.getElementById('produk-nama').textContent = produk.nama_produk;
-    document.getElementById('produk-deskripsi').textContent = produk.deskripsi;
-    document.getElementById('produk-harga').textContent = `Rp ${Number(produk.harga_produk).toLocaleString('id-ID')}`;
-    document.getElementById('produk-lama').textContent = produk.lama_pembuatan || '7-8 Menit';
-}
-
-// Panggil fungsi saat halaman dimuat (khusus BuyingPage)
-if (id) {
-    fetchProdukById(id);
-}
-
-
