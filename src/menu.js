@@ -50,6 +50,8 @@ productDiv.innerHTML = `
 
                 <h2 class="text-sm font-semibold text-gray-800 truncate mb-1">${product.nama_produk}</h2>
                 <p class="text-md font-bold text-gray-900">Rp ${Number(product.harga_produk).toLocaleString('id-ID')}</p>
+
+
             </a>
         `;
 

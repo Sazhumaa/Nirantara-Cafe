@@ -128,7 +128,7 @@ function displayProduct(product) {
         <section class="bg-white mx-4 md:mx-10 p-6 rounded-xl shadow-lg mt-5">
             <div class="grid md:grid-cols-3 gap-6">
                 <div class="flex justify-center">
-                    <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full max-w-xs h-auto rounded-xl object-cover" />
+                    <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full max-w-xs h-auto rounded-xl object-cover p-10 mb-10" />
                 </div>
                 <div>
                     <h2 class="text-2xl font-bold mb-2">${product.nama_produk}</h2>
@@ -148,8 +148,13 @@ function displayProduct(product) {
                             <button class="text-xl">-</button>
                             <span>1</span>
                             <button class="text-xl">+</button>
+                        </div> 
+                      </div>
+
+                        <div class=" w-52 bg-green-500 rounded-2xl p-3 mt-7 text-center hover:bg-green-400">
+                          <button class=" text-center text-white text-2xl font-bold"> Beli sekarang </button>
                         </div>
-                    </div>
+
                 </div>
             </div>
         </section>
