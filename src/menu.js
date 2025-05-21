@@ -81,6 +81,7 @@ async function fetchProdukById(id) {
     }
 }
 
+
 function tampilkanDetailProduk(produk) {
     document.getElementById('produk-gambar').src = produk.gambar_produk;
     document.getElementById('produk-nama').textContent = produk.nama_produk;
