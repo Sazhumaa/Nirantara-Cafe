@@ -84,6 +84,7 @@ async function fetchProdukById(id) {
 }
 
 
+//logika cartpage bang
 function tampilkanDetailProduk(produk) {
     document.getElementById('produk-gambar').src = produk.gambar_produk;
     document.getElementById('produk-nama').textContent = produk.nama_produk;
@@ -96,3 +97,13 @@ function tampilkanDetailProduk(produk) {
 if (id) {
     fetchProdukById(id);
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
+  const cartCountElement = document.getElementById('cart-count');
+  if (cartCountElement) {
+    cartCountElement.textContent = cartCount;
+  }
+});
+
