@@ -222,7 +222,23 @@ function displayProduct(product) {
       updateCartCount(newCount);
       console.log('Item ditambahkan ke cart');
     });
+    
+    // Pastikan dipanggil saat tombol diklik
+addToCartBtn.addEventListener('click', () => {
+  tambahKeCart(product);
+});
   }
+}
+
+
+function tambahKeCart(product) {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  cartItems.push(product);
+  localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+  const newCount = cartItems.length;
+  updateCartCount(newCount);
+  console.log('Produk ditambahkan ke cart:', product.nama_produk);
 }
 
 
@@ -249,13 +265,4 @@ fetchAllProducts();
   document.addEventListener('DOMContentLoaded', () => {
     updateCartCount(getCartCount());
   });
-
-  // Event listener untuk tombol tambah ke cart
-  document.getElementById('add-to-cart').addEventListener('click', () => {
-    const currentCount = getCartCount();
-    const newCount = currentCount + 1;
-    updateCartCount(newCount);
-  });
-
-console.log("makan")
 

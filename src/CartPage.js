@@ -1,4 +1,4 @@
-//logika cartpage bang
+// logika cartpage bang
 function tampilkanDetailProduk(produk) {
     document.getElementById('produk-gambar').src = produk.gambar_produk;
     document.getElementById('produk-nama').textContent = produk.nama_produk;
@@ -15,4 +15,30 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cartCountElement) {
     cartCountElement.textContent = cartCount;
   }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cartContainer = document.getElementById('cart-container');
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  if (cartItems.length === 0) {
+    cartContainer.innerHTML = '<p class="text-gray-500">Keranjang kamu kosong.</p>';
+    return;
+  }
+
+  cartItems.forEach(item => {
+    const itemCard = document.createElement('div');
+    itemCard.className = 'flex items-center gap-4 bg-white p-4 rounded shadow mb-4';
+
+    itemCard.innerHTML = `
+      <img src="${item.gambar_produk}" alt="${item.nama_produk}" class="w-20 h-20 object-cover rounded">
+      <div class="flex-1">
+        <h4 class="font-semibold text-lg">${item.nama_produk}</h4>
+        <p class="text-sm text-gray-500">Rp ${Number(item.harga_produk).toLocaleString('id-ID')}</p>
+        <p class="text-xs text-gray-400">${item.lama_pembuatan || '7-8 Menit'}</p>
+      </div>
+    `;
+
+    cartContainer.appendChild(itemCard);
+  });
 });
