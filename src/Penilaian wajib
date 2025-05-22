@@ -1,3 +1,65 @@
 CART di dalam card menu
 Like
 Subs Toko
+
+
+yang belom gw kelarin:
+
+logika:
+1. cart 
+2. wishlist
+3. pop up pembayaran
+
+desain 100%:
+1. cart
+2. pop up pembayaran
+
+
+// const addToCartButton = document.getElementById("add-to-cart");
+// const cartCountSpan = document.getElementById("cart-count");
+
+// function updateCartCount() {
+//   const currentCount = parseInt(localStorage.getItem("cartCount")) || 0;
+//   if (cartCountSpan) {
+//     cartCountSpan.textContent = currentCount;
+//   }
+// }
+
+// function addToCart() {
+//   let currentCount = parseInt(localStorage.getItem("cartCount")) || 0;
+//   currentCount += 1;
+//   localStorage.setItem("cartCount", currentCount);
+//   updateCartCount();
+// }
+
+// if (addToCartButton) {
+//   addToCartButton.addEventListener("click", addToCart);
+// }
+
+// // Untuk update saat load (misalnya cart icon ada di nav luar)
+// document.addEventListener("DOMContentLoaded", updateCartCount);
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   const addToCartButton = document.getElementById("add-to-cart");
+//   const cartCountSpan = document.getElementById("cart-count");
+
+//   function updateCartCount() {
+//     const currentCount = parseInt(localStorage.getItem("cartCount")) || 0;
+//     if (cartCountSpan) {
+//       cartCountSpan.textContent = currentCount;
+//     }
+//   }
+
+//   function addToCart() {
+//     let currentCount = parseInt(localStorage.getItem("cartCount")) || 0;
+//     currentCount += 1;
+//     localStorage.setItem("cartCount", currentCount);
+//     updateCartCount();
+//   }
+
+//   if (addToCartButton) {
+//     addToCartButton.addEventListener("click", addToCart);
+//   }
+
+//   updateCartCount();
+// });

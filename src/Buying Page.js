@@ -119,12 +119,38 @@ function getProductNameFromUrl() {
     return urlParams.get('name');
 }
 
-// Function to display a single product in card format
 function displayProduct(product) {
-    const container = document.getElementById('product-container');
-    container.innerHTML = ''; // Clear previous content
+  const container = document.getElementById('product-container');
+  container.innerHTML = ''; // Clear previous content
 
-    const productCard = `
+  const productCard = `
+    <!-- isi sama seperti sebelumnya -->
+    <button id="add-to-cart" class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
+      <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6" />
+    </button>
+    <!-- lanjutannya -->
+  `;
+
+  container.innerHTML = productCard;
+
+  // 🟢 Tambahkan event listener SETELAH elemen dimasukkan ke DOM
+  const addToCartBtn = document.getElementById('add-to-cart');
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', () => {
+      const currentCount = getCartCount();
+      const newCount = currentCount + 1;
+      updateCartCount(newCount);
+      console.log('Item ditambahkan ke cart');
+    });
+  }
+}
+
+
+function displayProduct(product) {
+  const container = document.getElementById('product-container');
+  container.innerHTML = ''; // Clear previous content
+
+  const productCard = `
 <div class="flex justify-center items-center  bg-gray-100 ">
   <div class="bg-white rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-7xl overflow-hidden">
     
@@ -170,9 +196,11 @@ function displayProduct(product) {
       <!-- Tombol Aksi -->
       <div class="flex space-x-3 mt-4">
         <button class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">Beli Sekarang</button>
-        <button class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
-          <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6">
-        </button>
+
+  <button id="add-to-cart" class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
+    <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6" />
+  </button>
+
         <button class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
           <img src="image/wishlist-Putih.png" alt="Wishlist" class="w-6 h-6">
         </button>
@@ -181,10 +209,53 @@ function displayProduct(product) {
 
   </div>
 </div>
+  `;
 
-    `;
-    container.innerHTML = productCard; // Append the product card to the container
+  container.innerHTML = productCard;
+
+  // 🟢 Tambahkan event listener SETELAH elemen dimasukkan ke DOM
+  const addToCartBtn = document.getElementById('add-to-cart');
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', () => {
+      const currentCount = getCartCount();
+      const newCount = currentCount + 1;
+      updateCartCount(newCount);
+      console.log('Item ditambahkan ke cart');
+    });
+  }
 }
+
+
+
+
 
 // Call the fetchAllProducts function to load products on page load
 fetchAllProducts();
+
+  function getCartCount() {
+    return parseInt(localStorage.getItem('cartCount')) || 0;
+  }
+
+  // Fungsi untuk set jumlah cart ke localStorage dan update UI
+  function updateCartCount(newCount) {
+    localStorage.setItem('cartCount', newCount);
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+      cartCountElement.textContent = newCount;
+    }
+  }
+
+  // Saat halaman dimuat, update tampilan jumlah cart
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount(getCartCount());
+  });
+
+  // Event listener untuk tombol tambah ke cart
+  document.getElementById('add-to-cart').addEventListener('click', () => {
+    const currentCount = getCartCount();
+    const newCount = currentCount + 1;
+    updateCartCount(newCount);
+  });
+
+console.log("makan")
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart Test</title>
+  <link rel="stylesheet" href="./output.css" />
+</head>
+<body class="p-6">
+
+  <!-- Navbar Cart -->
+  <div class="relative mb-6">
+    <a href="CartPage.html">
+      <img src="image/shopping-cart.png" class="w-6 h-6" />
+      <span id="cart-count" class="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+    </a>
+  </div>
+
+  <!-- Add to Cart Button -->
+  <button id="add-to-cart" class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
+    <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6" />
+  </button>
+
+  <!-- Tombol reset keranjang -->
+<button id="reset-cart" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+  Reset Keranjang
+</button>
+
+
+<script>
+    // Ambil referensi elemen
+const addToCartButton = document.getElementById('add-to-cart');
+const cartCountSpan = document.getElementById('cart-count');
+
+// Fungsi untuk update tampilan jumlah keranjang
+function updateCartCount() {
+  const currentCount = parseInt(localStorage.getItem('cartCount')) || 0;
+  if (cartCountSpan) {
+    cartCountSpan.textContent = currentCount;
+  }
+}
+
+// Fungsi untuk menambah ke cart
+function addToCart() {
+  let currentCount = parseInt(localStorage.getItem('cartCount')) || 0;
+  currentCount += 1;
+  localStorage.setItem('cartCount', currentCount);
+  updateCartCount();
+}
+
+// Pasang listener jika tombol ada
+if (addToCartButton) {
+  addToCartButton.addEventListener('click', addToCart);
+}
+
+// Update tampilan saat halaman dibuka
+document.addEventListener('DOMContentLoaded', updateCartCount);
+
+document.addEventListener("DOMContentLoaded", () => {
+  localStorage.setItem("cartCount", 0);
+
+  const cartCountSpan = document.getElementById("cart-count");
+  if (cartCountSpan) {
+    cartCountSpan.textContent = 0;
+  }
+});
+
+</script>
+
+</body>
+</html>
