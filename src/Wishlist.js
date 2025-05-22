@@ -8,7 +8,6 @@ function tampilkanDetailProduk(produk) {
 }
 
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
   const cartCountElement = document.getElementById('cart-count');
