@@ -172,7 +172,7 @@ function displayProduct(product) {
         </div>
 
         <!-- Harga -->
-        <p class="text-2xl text-yellow-600 font-bold">Rp ${product.harga_produk}</p>
+        <p class="text-2xl text-yellow-600 font-bold"> Rp <span id="total-harga">${product.harga_produk}</span> </p>
         <p class="text-sm text-gray-500 mb-2">Lama Pembuatan: ${product.lama_pembuatan}</p>
 
         <!-- Info tambahan -->
@@ -186,12 +186,12 @@ function displayProduct(product) {
         <div class="flex items-center space-x-3 mb-4">
           <span class="font-semibold">Kuantitas</span>
           <div class="flex items-center border rounded px-3 py-1">
-            <button class="text-lg font-bold px-2">-</button>
-            <span class="px-2">1</span>
-            <button class="text-lg font-bold px-2">+</button>
+            <button class="text-lg font-bold px-2" id="decrement">-</button>
+            <span class="px-2" id="quantity">1</span>
+            <button class="text-lg font-bold px-2" id="increment">+</button>
           </div>
         </div>
-      </div>
+
 
       <!-- Tombol Aksi -->
       <div class="flex space-x-3 mt-4">
@@ -210,8 +210,40 @@ function displayProduct(product) {
   </div>
 </div>
   `;
-
   container.innerHTML = productCard;
+
+
+  
+const quantitySpan = document.getElementById("quantity");
+const incrementBtn = document.getElementById("increment");
+const decrementBtn = document.getElementById("decrement");
+const totalHargaEl = document.getElementById("total-harga");
+
+// Inisialisasi harga dan kuantitas
+let quantity = parseInt(quantitySpan.textContent);
+const hargaSatuan = product.harga_produk;
+
+// Fungsi update harga total
+function updateTotalHarga() {
+  totalHargaEl.textContent = (hargaSatuan * quantity).toLocaleString('id-ID');
+}
+
+// Event listener tunggal (tidak dobel)
+incrementBtn.addEventListener("click", () => {
+  quantity++;
+  quantitySpan.textContent = quantity;
+  updateTotalHarga();
+});
+
+decrementBtn.addEventListener("click", () => {
+  if (quantity > 1) {
+    quantity--;
+    quantitySpan.textContent = quantity;
+    updateTotalHarga();
+  }
+});
+
+
 
   // 🟢 Tambahkan event listener SETELAH elemen dimasukkan ke DOM
   const addToCartBtn = document.getElementById('add-to-cart');

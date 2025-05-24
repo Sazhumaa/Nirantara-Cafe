@@ -42,3 +42,36 @@ document.addEventListener('DOMContentLoaded', () => {
     cartContainer.appendChild(itemCard);
   });
 });
+
+
+
+async function updateCartSummary() {
+  const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+  try {
+    const response = await fetch('http://localhost:8000/produk');
+    const allProducts = await response.json(); // anggap ini array of produk
+
+    let totalHarga = 0;
+    let totalItem = 0;
+
+    cartItems.forEach(cartItem => {
+      const produk = allProducts.find(p => p.id === cartItem.id_produk); // sesuaikan key-nya
+
+      if (produk) {
+        const harga = Number(produk.harga);
+        const jumlah = Number(cartItem.jumlah);
+
+        if (!isNaN(harga) && !isNaN(jumlah)) {
+          totalHarga += harga * jumlah;
+          totalItem += jumlah;
+        }
+      }
+    });
+
+    document.getElementById('total-harga').textContent = `Rp ${totalHarga.toLocaleString('id-ID')}`;
+    document.getElementById('checkout-count').textContent = totalItem;
+  } catch (error) {
+    console.error('Gagal mengambil produk dari API:', error);
+  }
+}
