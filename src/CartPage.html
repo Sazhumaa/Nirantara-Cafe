@@ -105,19 +105,42 @@
 </div>
 
 
-<div class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-inner border-t flex justify-between items-center z-50">
-  <!-- Checkbox Semua -->
-  <div class="flex items-center space-x-2">
-    <input type="checkbox" id="select-all" class="w-5 h-5 border-2  rounded-md accent-green-600" checked />
-    <label for="select-all" class="font-semibold">Semua</label>
-  </div>
-
+<div class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-inner z-50">
   <div class="flex justify-between items-center">
-    <div class="font-bold">Total <span id="total-harga">Rp 0</span></div>
-    <button class="bg-red-500 text-white font-bold px-4 py-2 rounded" id="checkout-btn">
+    
+    <!-- Checkbox Semua -->
+    <div class="flex items-center space-x-2">
+      <input
+        type="checkbox"
+        id="select-all"
+        class="w-5 h-5 rounded-md accent-green-600 border-gray-300"
+        checked
+      />
+      <label for="select-all" class="font-medium text-gray-800">Semua</label>
+    </div>
+
+<!-- Total & Checkout -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="text-gray-800 text-lg font-semibold">
+      Total: <span id="total-harga">Rp 0</span>
+
+    </div>
+    <button
+      id="checkout-btn"
+      class="bg-red-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-600 transition duration-200 flex items-center"
+    >
       Checkout (<span id="checkout-count">0</span>)
+      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+      </svg>
     </button>
   </div>
+</div>
+    
+  </div>
+</div>
+
 
 
 <script src="CartPage.js"></script>
