@@ -27,6 +27,14 @@
 </button>
 
 
+      <img src="${item.gambar_produk}" alt="${item.nama_produk}" class="w-20 h-20 object-cover rounded">
+      <div class="flex-1">
+        <h4 class="font-semibold text-lg">${item.nama_produk}</h4>
+        <p class="text-sm text-gray-500">Rp ${Number(item.harga_produk).toLocaleString('id-ID')}</p>
+        <p class="text-xs text-gray-400">${item.lama_pembuatan || '7-8 Menit'}</p>
+      </div>
+
+
 <script>
     // Ambil referensi elemen
 const addToCartButton = document.getElementById('add-to-cart');
