@@ -1,101 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-  <link href="./output.css" rel="stylesheet">  
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home Page</title>
+  <link href="./output.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
 </head>
 <body class="bg-gray-100 font-sans">
 
 <div class="flex min-h-screen">
 
   <!-- Sidebar -->
-  <div class="w-20 md:w-28 bg-white flex flex-col items-center py-10 ">
+  <div class="w-20 md:w-28 bg-white flex flex-col items-center py-10">
     <div class="mb-10">
-      <img src="image\Nirantara Coffe.png" alt="Logo" class="rounded-full w-15 h-15">
+      <img src="image/Nirantara Coffe.png" alt="Logo" class="rounded-full w-12 h-12 md:w-15 md:h-15"/>
     </div>
     <nav class="flex flex-col gap-8 text-center">
       <a href="Home Page.html" class="flex flex-col items-center text-gray-700 hover:text-black">
-        <img src="image\home (1).png" class="w-6 h-6" />
+        <img src="image/home (1).png" class="w-6 h-6" />
         <span class="hidden md:block text-sm mt-1">Home</span>
       </a>
       <a href="menu.html" class="flex flex-col items-center text-gray-700 hover:text-black">
-        <img src="image\coffee-cup (2).png" class="w-6 h-6" />
+        <img src="image/coffee-cup (2).png" class="w-6 h-6" />
         <span class="hidden md:block text-sm mt-1">Menu</span>
       </a>
-
     </nav>
   </div>
 
   <!-- Main Content -->
-  <div class="flex-1 p-10">
-    
+  <div class="flex-1 p-4 sm:p-6 md:p-10 max-w-screen-xl mx-auto w-full">
+
     <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
-      <div class="flex-1">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div class="flex-1 min-w-[200px]">
         <input type="text" placeholder="Search Product" class="w-full border rounded-full py-2 px-4 outline-none"/>
       </div>
-      <div class="flex items-center gap-4 ml-6">
-        <div class="relative">
-          <a href="CartPage.html">
-            <img src="image/shopping-cart.png" class="w-6 h-6" />
-            <span id="cart-count" class="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-              0
-            </span>
-          </a>
-        </div>
-          <a href="Profilepage.html">
-          <img src="image\Suiseiii pp.jpg" class="w-10 h-10 rounded-full" />
-          </a>
+      <div class="flex items-center gap-4">
+        <a href="CartPage.html" class="relative">
+          <img src="image/shopping-cart.png" class="w-6 h-6"/>
+          <span id="cart-count" class="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </a>
+        <a href="Profilepage.html">
+          <img src="image/Suiseiii pp.jpg" class="w-10 h-10 rounded-full"/>
+        </a>
       </div>
     </div>
 
     <!-- Promo Banner -->
-    <div class="mb-4 items-center ">
-      <img src="image\Brown Coffee Shop Gift Voucher Coupon (1).png" class="w-full h-140 rounded-2xl" />
+    <div class="mb-6">
+      <img src="image/Brown Coffee Shop Gift Voucher Coupon (1).png" alt="Promo" class="w-full rounded-2xl object-cover max-h-[300px] sm:max-h-[400px] lg:max-h-[500px]"/>
     </div>
 
     <!-- Rekomendasi Menu -->
     <h3 class="text-xl font-semibold mb-4">Rekomendasi Menu</h3>
-  
-        <div id="coffee-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-
-
-            <!-- <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-       
-            Menu Card
-            <div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg">
-              <a href="Buying Page.html">
-              <img src="image\Peppermint-Matcha-Latte.jpg" alt="Mocha Latte" class="rounded-lg mb-4 h-40 w-full object-cover">
-              <div class="text-gray-500 text-sm mb-1">21-25 min</div>
-              <div class="flex items-center gap-1 text-yellow-400 text-sm mb-2">
-                ⭐ 4.5 | 1k Rating
-              </div>
-              <h4 class="text-lg font-bold mb-1">Mocha Latte</h4>
-              <p class="text-gray-700">Rp 10.000</p>
-              </a>
-            </div> -->
-
-
-
-
-
-      
-      
-      <!-- Menu Card -->
-
-
-
+    <div id="coffee-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Produk akan dimasukkan dengan JavaScript -->
     </div>
 
   </div>
-
 </div>
-    <script src="Home Page.js"></script>
+
+<script src="Home Page.js"></script>
 </body>
 </html>
