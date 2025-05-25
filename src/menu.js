@@ -1,3 +1,12 @@
+// const navMenus = document.querySelectorAll('.nav-menu');
+
+// navMenus.forEach(menu => {
+//     menu.addEventListener('click', () => {
+//         navMenus.forEach(item => item.classList.remove('bg-[#D9D9D9]'));
+//         menu.classList.add('bg-[#D9D9D9]');
+//     });
+// });
+
 const navMenus = document.querySelectorAll('.nav-menu');
 const productList = document.getElementById('coffee-container');
 const url_api = 'http://localhost:8000/produk';
@@ -74,3 +83,100 @@ navMenus.forEach(menu => {
 
 // Panggil pertama kali untuk semua produk
 window.onload = () => fetchProducts();
+
+
+// ================================
+// BAGIAN BUYING PAGE DETAIL PRODUK
+// ================================
+
+// Ambil ID dari URL
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get('id');
+
+async function fetchProdukById(id) {
+    try {
+        const response = await fetch(`${url_api}/${id}`);
+        if (!response.ok) throw new Error('Produk tidak ditemukan');
+
+        const produk = await response.json();
+        tampilkanDetailProduk(produk);
+    } catch (err) {
+        console.error(err);
+        const container = document.getElementById('produk-container');
+        if (container) {
+            container.innerHTML = '<p class="text-red-500">Produk tidak ditemukan.</p>';
+        }
+    }
+}
+
+
+//logika cartpage bang
+function tampilkanDetailProduk(produk) {
+    document.getElementById('produk-gambar').src = produk.gambar_produk;
+    document.getElementById('produk-nama').textContent = produk.nama_produk;
+    document.getElementById('produk-deskripsi').textContent = produk.deskripsi;
+    document.getElementById('produk-harga').textContent = `Rp ${Number(produk.harga_produk).toLocaleString('id-ID')}`;
+    document.getElementById('produk-lama').textContent = produk.lama_pembuatan || '7-8 Menit';
+}
+
+// Panggil fungsi saat halaman dimuat (khusus BuyingPage)
+if (id) {
+    fetchProdukById(id);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cartCount = parseInt(localStorage.getItem('cartCount')) || 0;
+  const cartCountElement = document.getElementById('cart-count');
+  if (cartCountElement) {
+    cartCountElement.textContent = cartCount;
+  }
+});
+
+
+//filtter
+
+const container = document.getElementById("produkContainer");
+
+function fetchData(kategoriFilter = "All") {
+  fetch("http://localhost:8000/produk")
+    .then((response) => response.json())
+    .then((data) => {
+      let filteredData = data;
+      if (kategoriFilter !== "All") {
+        filteredData = data.filter(item => item.kategori_produk === kategoriFilter);
+      }
+      renderProduk(filteredData);
+    })
+    .catch((error) => {
+      console.error("Gagal ambil data produk:", error);
+    });
+}
+
+
+function renderProduk(produkList) {
+  container.innerHTML = "";
+
+  if (produkList.length === 0) {
+    container.innerHTML = "<p class='text-center col-span-full'>Tidak ada produk dalam kategori ini.</p>";
+    return;
+  }
+
+  produkList.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "bg-white p-4 rounded-xl shadow-md flex flex-col items-center";
+
+    card.innerHTML = `
+      <img src="${item.gambar_produk}" alt="${item.nama_produk}" class="w-32 h-32 object-cover mb-3 rounded">
+      <h2 class="text-lg font-semibold mb-1">${item.nama_produk}</h2>
+      <p class="text-sm text-gray-500 mb-2">${item.kategori_produk}</p>
+      <p class="text-base font-bold text-gray-800 mb-2">Rp ${Number(item.harga_produk).toLocaleString()}</p>
+      <button class="bg-black text-white px-4 py-1 rounded-full text-sm">Add to Cart</button>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// Menjalankan saat pertama load (tanpa filter)
+fetchData();
