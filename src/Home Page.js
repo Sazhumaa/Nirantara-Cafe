@@ -145,3 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Search 
+document.getElementById('search-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = e.target.value.trim();
+        if (query !== '') {
+          window.location.href = `SearchPage.html?query=${encodeURIComponent(query)}`;
+        }
+      }
+    });
