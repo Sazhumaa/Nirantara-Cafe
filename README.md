@@ -12,6 +12,8 @@ Integrated digital payment methods for safe and convenient transactions
 
 **🛠 Technology Stack**
 Frontend: HTML, Tailwind CSS, JavaScript
+Backend: Node, Express Js
+Database: MongoDB
 
 **🌱 Project Objective**
 This project aims to support and empower local coffee businesses by providing them with a digital platform to expand their market reach, improve operational efficiency, and enhance customer engagement through online sales.
