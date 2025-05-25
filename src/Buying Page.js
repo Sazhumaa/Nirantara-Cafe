@@ -110,7 +110,9 @@ function displayProduct(product) {
 
       <!-- Tombol Aksi -->
       <div class="flex space-x-3 mt-4">
-        <button class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">Beli Sekarang</button>
+<button id="beliBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">
+  Beli Sekarang
+</button>
 
   <button id="add-to-cart" class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
     <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6" />
@@ -156,6 +158,37 @@ decrementBtn.addEventListener("click", () => {
     quantitySpan.textContent = quantity;
     updateTotalHarga();
   }
+});
+
+
+//Pop up pembayaran
+document.getElementById('beliBtn').addEventListener('click', () => {
+  const popupContainer = document.getElementById('popupContainer');
+
+  popupContainer.innerHTML = `
+<div id="popupSuccess" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div class="bg-white rounded-xl shadow-lg p-6 text-center max-w-sm w-full">
+    <img src="image/checklist.png" alt="" class="w-20 h-auto object-center mb-3 mx-auto">
+    <h2 class="text-xl font-bold text-green-600 mb-2">Pembayaran Berhasil!</h2>
+    <p class="text-gray-700 mb-4">Terima kasih telah melakukan pembelian.</p>
+    <button id="closePopup" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold">
+      Tutup
+    </button>
+  </div>
+</div>
+  `;
+
+  // Tambahkan event untuk tombol tutup
+  document.getElementById('closePopup').addEventListener('click', () => {
+    popupContainer.innerHTML = ''; // Hapus popup
+  });
+
+  // Tutup juga jika klik di luar konten popup
+  document.getElementById('popupSuccess').addEventListener('click', (e) => {
+    if (e.target.id === 'popupSuccess') {
+      popupContainer.innerHTML = '';
+    }
+  });
 });
 
 

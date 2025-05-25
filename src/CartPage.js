@@ -146,3 +146,46 @@ function updateCartSummary() {
     checkoutCountEl.textContent = totalItem;
   }
 }
+
+
+// Event saat klik tombol Checkout
+document.getElementById('checkout-btn').addEventListener('click', () => {
+  // Hapus semua item cart
+  localStorage.removeItem('cartItems');
+  localStorage.setItem('cartCount', '0');
+
+  // Update tampilan jumlah cart
+  updateCartCountDisplay();
+
+  // Kosongkan isi cart di halaman
+  document.getElementById('cart-container').innerHTML = '';
+  updateCartSummary();
+
+  // Tampilkan pop-up pembayaran berhasil
+  const popupContainer = document.createElement('div');
+  popupContainer.innerHTML = `
+    <div id="popupSuccess" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center max-w-sm w-full">
+        <img src="image/checklist.png" alt="" class="w-20 h-auto object-center mb-3 mx-auto">
+        <h2 class="text-xl font-bold text-green-600 mb-2">Pembayaran Berhasil!</h2>
+        <p class="text-gray-700 mb-4">Terima kasih telah melakukan pembelian.</p>
+        <button id="closePopup" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold">
+          Tutup
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(popupContainer);
+
+  // Tutup popup jika tombol 'Tutup' diklik atau klik di luar kotak
+  document.getElementById('closePopup').addEventListener('click', () => {
+    popupContainer.remove();
+  });
+
+  document.getElementById('popupSuccess').addEventListener('click', (e) => {
+    if (e.target.id === 'popupSuccess') {
+      popupContainer.remove();
+    }
+  });
+});
