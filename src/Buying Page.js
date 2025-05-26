@@ -64,9 +64,10 @@ function displayProduct(product) {
 function displayProduct(product) {
   const container = document.getElementById('product-container');
   container.innerHTML = ''; // Clear previous content
+  
 
   const productCard = `
-<div class="flex justify-center items-center  bg-gray-100 ">
+  <div class="flex justify-center items-center  bg-gray-100 ">
   <div class="bg-white rounded-2xl shadow-xl flex flex-col md:flex-row w-full max-w-7xl overflow-hidden">
     
     <!-- Container Gambar -->
@@ -78,8 +79,6 @@ function displayProduct(product) {
     <div class="md:w-1/2 p-6 flex flex-col justify-between">
       <div>
         <h2 class="text-2xl font-bold mb-2">${product.nama_produk}</h2>
-        <p class="mb-1 text-sm"><span class="font-semibold">Bahan:</span> ${product.kategori_produk}</p>
-        <p class="mb-1 text-sm"><span class="font-semibold">Komposisi:</span> ${product.lama_pembuatan}</p>
 
         <!-- Rating -->
         <div class="flex space-x-1 my-2 text-yellow-500 text-xl">
@@ -251,3 +250,40 @@ fetchAllProducts();
     updateCartCount(getCartCount());
   });
 
+
+  // Navigasi Tab Deskripsi & Komposisi
+// Tab Switching
+const params = new URLSearchParams(window.location.search);
+const productId = params.get("id");
+
+// Cek apakah ID ada
+if (!productId) {
+  console.error("ID produk tidak ditemukan di URL.");
+  document.getElementById("deskripsi").textContent = "ID produk tidak ditemukan.";
+  document.getElementById("komposisi").textContent = "ID produk tidak ditemukan.";
+} else {
+  fetch("http://localhost:8000/produk")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Data dari API:", data); // Debug: tampilkan data lengkap
+
+      // Pastikan data adalah array dan id cocok
+      const produk = data.find((item) => String(item.id) === String(productId));
+
+      if (produk) {
+        // Isi deskripsi dan komposisi
+        document.getElementById("deskripsi").textContent =
+          produk.deskripsi_produk || "Deskripsi tidak tersedia.";
+        document.getElementById("komposisi").textContent =
+          produk.komposisi_produk || "Komposisi tidak tersedia.";
+      } else {
+        document.getElementById("deskripsi").textContent = "Produk tidak ditemukan.";
+        document.getElementById("komposisi").textContent = "";
+      }
+    })
+    .catch((err) => {
+      console.error("Gagal memuat produk:", err);
+      document.getElementById("deskripsi").textContent = "Gagal memuat data.";
+      document.getElementById("komposisi").textContent = "Gagal memuat data.";
+    });
+}
