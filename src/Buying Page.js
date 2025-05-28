@@ -173,19 +173,28 @@ function tambahKeCart(product) {
   const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const quantity = parseInt(document.getElementById("quantity").textContent) || 1;
 
-  const item = {
-    nama_produk: product.nama_produk,
-    harga_produk: product.harga_produk,
-    gambar_produk: product.gambar_produk,
-    jumlah: quantity
-  };
+  const existingIndex = cartItems.findIndex(item => item.nama_produk === product.nama_produk);
 
-  cartItems.push(item);
+  if (existingIndex !== -1) {
+    // Produk sudah ada di cart, tambahkan jumlah
+    cartItems[existingIndex].jumlah += quantity;
+  } else {
+    // Produk belum ada di cart, tambahkan baru
+    const item = {
+      nama_produk: product.nama_produk,
+      harga_produk: product.harga_produk,
+      gambar_produk: product.gambar_produk,
+      jumlah: quantity
+    };
+    cartItems.push(item);
+  }
+
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
   const newCount = cartItems.reduce((sum, i) => sum + i.jumlah, 0);
   updateCartCount(newCount);
 }
+
 
 function getCartCount() {
   return parseInt(localStorage.getItem('cartCount')) || 0;
