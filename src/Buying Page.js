@@ -141,24 +141,60 @@ function displayProduct(product) {
   });
 
   document.getElementById("add-to-cart").addEventListener("click", () => {
-    const item = {
-      nama_produk: product.nama_produk,
-      harga_produk: product.harga_produk,
-      gambar_produk: product.gambar_produk,
-      jumlah: quantity
-    };
-
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const existing = cartItems.find(i => i.nama_produk === item.nama_produk);
-    if (existing) {
-      existing.jumlah += quantity;
-    } else {
-      cartItems.push(item);
-    }
-
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    updateCartCount(cartItems.reduce((sum, i) => sum + i.jumlah, 0));
+    addToCart(product, quantity);
   });
+}
+
+// Fungsi untuk menambahkan item ke cart
+function addToCart(product, quantity = 1) {
+  const item = {
+    nama_produk: product.nama_produk,
+    harga_produk: product.harga_produk,
+    gambar_produk: product.gambar_produk,
+    jumlah: quantity
+  };
+
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  const existing = cartItems.find(i => i.nama_produk === item.nama_produk);
+  
+  if (existing) {
+    existing.jumlah += quantity;
+  } else {
+    cartItems.push(item);
+  }
+
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  const totalItems = cartItems.reduce((sum, i) => sum + i.jumlah, 0);
+  updateCartCount(totalItems);
+  
+  // Tampilkan notifikasi berhasil ditambahkan
+  showAddToCartNotification(product.nama_produk);
+}
+
+// Fungsi untuk menampilkan notifikasi
+function showAddToCartNotification(productName) {
+  const notification = document.createElement('div');
+  notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300';
+  notification.innerHTML = `
+    <div class="flex items-center space-x-2">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+      </svg>
+      <span>${productName} ditambahkan ke keranjang!</span>
+    </div>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Hapus notifikasi setelah 3 detik
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    setTimeout(() => {
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+    }, 300);
+  }, 3000);
 }
 
 function updateCartCount(newCount) {
@@ -185,7 +221,7 @@ async function loadRekomendasiProduk() {
 
       const encodedName = encodeURIComponent(product.nama_produk);
       productDiv.innerHTML = `
-        <button class="absolute top-2 right-2 bg-green-200 rounded-2xl p-2 z-10" aria-label="Add to cart">
+        <button class="cart-btn absolute top-2 right-2 bg-green-200 hover:bg-green-300 rounded-2xl p-2 z-10 transition-colors duration-200" aria-label="Add to cart" data-product='${JSON.stringify(product)}'>
           <img src="image/shopping-cart.png" class="w-5 h-5 pointer-events-none" />
         </button>
         <a href="Buying Page.html?name=${encodedName}" class="block p-3">
@@ -202,8 +238,22 @@ async function loadRekomendasiProduk() {
           <p class="text-md font-bold text-gray-900">Rp ${Number(product.harga_produk).toLocaleString('id-ID')}</p>
         </a>
       `;
+      
       container.appendChild(productDiv);
     });
+
+    // Tambahkan event listener untuk semua tombol cart di rekomendasi
+    const cartButtons = container.querySelectorAll('.cart-btn');
+    cartButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const productData = JSON.parse(button.getAttribute('data-product'));
+        addToCart(productData, 1);
+      });
+    });
+
   } catch (error) {
     console.error("Gagal memuat rekomendasi produk:", error);
   }
