@@ -267,3 +267,114 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('deskripsi').classList.add('hidden');
   });
 });
+
+
+//profiklll
+// Contoh penggunaan di halaman lain (misalnya Home Page.html)
+
+// Fungsi untuk memuat dan menampilkan data profil di halaman lain
+function loadUserProfileInOtherPage() {
+    // Cek apakah ada data profil tersimpan
+    const savedProfile = localStorage.getItem('userProfile');
+    
+    if (savedProfile) {
+        try {
+            const profileData = JSON.parse(savedProfile);
+            
+            // Update elemen-elemen yang menampilkan info user
+            updateUserDisplay(profileData);
+            
+            console.log('Profile loaded:', profileData);
+        } catch (error) {
+            console.error('Error loading profile:', error);
+            // Gunakan data default jika ada error
+            useDefaultProfile();
+        }
+    } else {
+        // Gunakan data default jika belum ada profil tersimpan
+        useDefaultProfile();
+    }
+}
+
+// Update tampilan user di halaman lain
+function updateUserDisplay(profileData) {
+    // Update nama user di header/navbar
+    const userNameElement = document.querySelector('.user-name');
+    if (userNameElement) {
+        userNameElement.textContent = `${profileData.firstName} ${profileData.lastName}`;
+    }
+    
+    // Update foto profil di header/navbar
+    const userAvatarElement = document.querySelector('.user-avatar');
+    if (userAvatarElement) {
+        userAvatarElement.src = profileData.profileImage;
+    }
+    
+    // Update email di footer atau info section
+    const userEmailElement = document.querySelector('.user-email');
+    if (userEmailElement) {
+        userEmailElement.textContent = profileData.email;
+    }
+    
+    // Update welcome message
+    const welcomeElement = document.querySelector('.welcome-message');
+    if (welcomeElement) {
+        welcomeElement.textContent = `Welcome back, ${profileData.firstName}!`;
+    }
+}
+
+// Gunakan data default
+function useDefaultProfile() {
+    const defaultData = {
+        firstName: "Suisei",
+        lastName: "Hoshimachi",
+        email: "suiseihoshimachi@gmail.com",
+        birthDate: "22 Maret",
+        profileImage: "image/Suiseiii pp.jpg"
+    };
+    
+    updateUserDisplay(defaultData);
+}
+
+// Listen untuk perubahan localStorage (real-time sync antar tab)
+window.addEventListener('storage', function(e) {
+    if (e.key === 'userProfile') {
+        console.log('Profile updated in another tab');
+        loadUserProfileInOtherPage();
+    }
+});
+
+// Panggil fungsi saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+    loadUserProfileInOtherPage();
+});
+
+// Fungsi utility untuk mendapatkan data profil dari mana saja
+function getCurrentUserProfile() {
+    const savedProfile = localStorage.getItem('userProfile');
+    return savedProfile ? JSON.parse(savedProfile) : null;
+}
+
+// Fungsi untuk mengecek apakah user sudah mengatur profil
+function isProfileSetup() {
+    return localStorage.getItem('userProfile') !== null;
+}
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      try {
+        const profileData = JSON.parse(savedProfile);
+        if (profileData.profileImage) {
+          const profileImgElement = document.getElementById('navProfileImage');
+          if (profileImgElement) {
+            profileImgElement.src = profileData.profileImage;
+          }
+        }
+      } catch (e) {
+        console.error('Gagal memuat gambar profil dari localStorage:', e);
+      }
+    }
+  });
+
