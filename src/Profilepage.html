@@ -1,135 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-  <link href="./output.css" rel="stylesheet">  
-    <script src="main.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Page</title>
+  <link href="./output.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    #saveBtn:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .notification {
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .fade-out {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
 </head>
 <body class="bg-gray-100 font-sans">
-
 <div class="flex min-h-screen">
 
   <!-- Sidebar -->
-  <div class="w-20 md:w-28 bg-white flex flex-col items-center py-10 ">
+  <div class="w-20 md:w-28 bg-white flex flex-col items-center py-10">
     <div class="mb-10">
-      <img src="image\Nirantara Coffe.png" alt="Logo" class="rounded-full w-15 h-15">
+      <img src="image/Nirantara Coffe.png" alt="Logo" class="rounded-full w-15 h-15" />
     </div>
     <nav class="flex flex-col gap-8 text-center">
       <a href="Home Page.html" class="flex flex-col items-center text-gray-700 hover:text-black">
-        <img src="image\home (1).png" class="w-6 h-6" />
+        <img src="image/home (1).png" class="w-6 h-6" />
         <span class="hidden md:block text-sm mt-1">Home</span>
       </a>
       <a href="menu.html" class="flex flex-col items-center text-gray-700 hover:text-black">
-        <img src="image\coffee-cup (2).png" class="w-6 h-6" />
+        <img src="image/coffee-cup (2).png" class="w-6 h-6" />
         <span class="hidden md:block text-sm mt-1">Menu</span>
       </a>
+    </nav>
   </div>
 
-  
+  <!-- Main Content -->
   <main class="flex-1 flex justify-center items-start p-10">
     <div class="w-full max-w-3xl bg-white rounded-3xl shadow p-10">
       <h1 class="text-2xl font-semibold text-center mb-10">Profil Akun</h1>
 
       <!-- Gambar Profil -->
       <div class="flex justify-center mb-10 relative">
-        <img src="image/Suiseiii pp.jpg" class="w-48 h-48 rounded-full object-cover" />
-        <div class="absolute bottom-2 right-[38%] bg-gray-200 p-4 rounded-full shadow cursor-pointer">
+        <img id="profileImage" src="image/Suiseiii pp.jpg" class="w-48 h-48 rounded-full object-cover" />
+        <div class="absolute bottom-2 right-[38%] bg-gray-200 hover:bg-gray-300 p-4 rounded-full shadow cursor-pointer transition-colors duration-200" onclick="document.getElementById('fileInput').click()">
           ✏️
         </div>
+        <input type="file" id="fileInput" accept="image/*" class="hidden" onchange="changeProfileImage(event)" />
       </div>
 
       <!-- Form Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- First Name -->
         <div>
           <label class="flex justify-between text-sm mb-1">
-            First Name <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+            First Name
+            <span class="edit-btn text-gray-500 hover:text-gray-700 cursor-pointer transition-colors duration-200" onclick="toggleEditMode('firstName')">Edit ✎</span>
           </label>
-          <div class="flex items-center border-2 border-blue-500 rounded-md px-3 py-2">
-            <input type="text" value="Suisei" class="flex-1 outline-none bg-transparent" readonly />
+          <div class="flex items-center border-2 border-blue-500 rounded-md px-3 py-2 transition-colors duration-200">
+            <input type="text" data-field="firstName" value="Suisei" class="flex-1 outline-none bg-transparent transition-colors duration-200" readonly />
             <span>👤</span>
           </div>
         </div>
 
-        <!-- Last Name -->
         <div>
           <label class="flex justify-between text-sm mb-1">
-            Last Name <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+            Last Name
+            <span class="edit-btn text-gray-500 hover:text-gray-700 cursor-pointer transition-colors duration-200" onclick="toggleEditMode('lastName')">Edit ✎</span>
           </label>
-          <div class="flex items-center border-2 border-blue-500 rounded-md px-3 py-2">
-            <input type="text" value="Hoshimachi" class="flex-1 outline-none bg-transparent" readonly />
+          <div class="flex items-center border-2 border-blue-500 rounded-md px-3 py-2 transition-colors duration-200">
+            <input type="text" data-field="lastName" value="Hoshimachi" class="flex-1 outline-none bg-transparent transition-colors duration-200" readonly />
             <span>👤</span>
           </div>
         </div>
 
-        <!-- Email -->
         <div>
           <label class="flex justify-between text-sm mb-1">
-            Email <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+            Email
+            <span class="edit-btn text-gray-500 hover:text-gray-700 cursor-pointer transition-colors duration-200" onclick="toggleEditMode('email')">Edit ✎</span>
           </label>
-          <div class="flex items-center border-2 border-pink-400 rounded-md px-3 py-2">
-            <input type="text" value="suiseihoshimachi@gmail.com" class="flex-1 outline-none bg-transparent" readonly />
+          <div class="flex items-center border-2 border-pink-400 rounded-md px-3 py-2 transition-colors duration-200">
+            <input type="text" data-field="email" value="suiseihoshimachi@gmail.com" class="flex-1 outline-none bg-transparent transition-colors duration-200" readonly />
             <span>💌</span>
           </div>
         </div>
 
-        <!-- Telephone Number -->
         <div>
           <label class="flex justify-between text-sm mb-1">
-            Telephone Number <span class="text-gray-500 cursor-pointer">Edit ✎</span>
+            Tanggal Lahir
+            <span class="edit-btn text-gray-500 hover:text-gray-700 cursor-pointer transition-colors duration-200" onclick="toggleEditMode('birthDate')">Edit ✎</span>
           </label>
-          <div class="flex items-center border-2 border-pink-400 rounded-md px-3 py-2">
-            <input type="text" value="+8132365476834" class="flex-1 outline-none bg-transparent" readonly />
-            <span>📞</span>
-          </div>
-        </div>
-
-        <!-- Tanggal Lahir -->
-        <div>
-          <label class="flex justify-between text-sm mb-1">
-            Tanggal Lahir <span class="text-gray-500 cursor-pointer">Edit ✎</span>
-          </label>
-          <div class="flex items-center border-2 border-purple-400 rounded-md px-3 py-2">
-            <input type="text" value="22 Maret" class="flex-1 outline-none bg-transparent" readonly />
+          <div class="flex items-center border-2 border-purple-400 rounded-md px-3 py-2 transition-colors duration-200">
+            <input type="text" data-field="birthDate" value="22 Maret" class="flex-1 outline-none bg-transparent transition-colors duration-200" readonly />
             <span>📅</span>
           </div>
         </div>
-
-        <!-- Negara -->
-        <div>
-          <label class="flex justify-between text-sm mb-1">
-            Negara <span class="text-gray-500 cursor-pointer">Edit ✎</span>
-          </label>
-          <div class="flex items-center border-2 border-green-400 rounded-md px-3 py-2">
-            <input type="text" value="Japan" class="flex-1 outline-none bg-transparent" readonly />
-            <span>✅</span>
-          </div>
-        </div>
       </div>
+
+      <!-- Action Buttons -->
+      <div class="flex justify-center space-x-4 mt-8">
+
+      <button onclick="resetProfile()" class="bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+        🔄 Reset
+      </button>
+      <button id="editBtn" onclick="toggleEditAll()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+        ✏️ Edit
+      </button>     
+      <button id="saveBtn" onclick="saveAll()" class="bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-colors duration-200" disabled>
+  💾 Save
+      </button>
     </div>
   </main>
 </div>
 
+<script src="Profilepage.js">
 
-
-        
-        </div>
-      </div>
-
-      </div>
-    </div>
-  </div>
-  
-
-
-
-
-
-</div>
+</script>
 </body>
 </html>
