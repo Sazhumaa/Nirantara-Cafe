@@ -177,9 +177,7 @@ function showAddToCartNotification(productName) {
   notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300';
   notification.innerHTML = `
     <div class="flex items-center space-x-2">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-      </svg>
+
       <span>${productName} ditambahkan ke keranjang!</span>
     </div>
   `;
@@ -228,9 +226,6 @@ async function loadRekomendasiProduk() {
           <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full h-40 object-contain mb-4 rounded-md">
           <p class="text-xs text-gray-500 mb-1">21–25 min</p>
           <div class="flex items-center text-yellow-500 text-sm mb-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-4 h-4 mr-1">
-              <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.782 1.4 8.171L12 18.896l-7.334 3.868 1.4-8.171L.132 9.211l8.2-1.193z"/>
-            </svg>
             <span class="font-semibold">${(product.rating || 4.2).toFixed(1)}</span>
             <span class="text-gray-600 text-xs ml-1">| ${product.review_count || 120} Rating</span>
           </div>
