@@ -167,33 +167,10 @@ function addToCart(product, quantity = 1) {
   const totalItems = cartItems.reduce((sum, i) => sum + i.jumlah, 0);
   updateCartCount(totalItems);
   
-  // Tampilkan notifikasi berhasil ditambahkan
-  showAddToCartNotification(product.nama_produk);
+
 }
 
-// Fungsi untuk menampilkan notifikasi
-function showAddToCartNotification(productName) {
-  const notification = document.createElement('div');
-  notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300';
-  notification.innerHTML = `
-    <div class="flex items-center space-x-2">
 
-      <span>${productName} ditambahkan ke keranjang!</span>
-    </div>
-  `;
-  
-  document.body.appendChild(notification);
-  
-  // Hapus notifikasi setelah 3 detik
-  setTimeout(() => {
-    notification.style.opacity = '0';
-    setTimeout(() => {
-      if (notification.parentNode) {
-        notification.parentNode.removeChild(notification);
-      }
-    }, 300);
-  }, 3000);
-}
 
 function updateCartCount(newCount) {
   localStorage.setItem('cartCount', newCount);
@@ -212,27 +189,47 @@ async function loadRekomendasiProduk() {
     const container = document.getElementById("rekomendasi-produk");
     container.innerHTML = "";
 
-    const rekomendasi = data.slice(0, 5);
+    const rekomendasi = data.slice(0, 4);
     rekomendasi.forEach(product => {
       const productDiv = document.createElement("div");
-      productDiv.className = "bg-white rounded-2xl shadow-md relative w-[180px] flex-shrink-0";
+productDiv.className = "bg-white rounded-2xl shadow-md relative w-[250px] flex-shrink-0 hover:shadow-xl hover:-translate-y-1 transition-transform duration-200 mx-1 my-2 p-3";
 
-      const encodedName = encodeURIComponent(product.nama_produk);
-      productDiv.innerHTML = `
-        <button class="cart-btn absolute top-2 right-2 bg-green-200 hover:bg-green-300 rounded-2xl p-2 z-10 transition-colors duration-200" aria-label="Add to cart" data-product='${JSON.stringify(product)}'>
-          <img src="image/shopping-cart.png" class="w-5 h-5 pointer-events-none" />
-        </button>
-        <a href="Buying Page.html?name=${encodedName}" class="block p-3">
-          <img src="${product.gambar_produk}" alt="${product.nama_produk}" class="w-full h-40 object-contain mb-4 rounded-md">
-          <p class="text-xs text-gray-500 mb-1">21–25 min</p>
-          <div class="flex items-center text-yellow-500 text-sm mb-1">
-            <span class="font-semibold">${(product.rating || 4.2).toFixed(1)}</span>
-            <span class="text-gray-600 text-xs ml-1">| ${product.review_count || 120} Rating</span>
-          </div>
-          <h2 class="text-sm font-semibold text-gray-800 truncate mb-1">${product.nama_produk}</h2>
-          <p class="text-md font-bold text-gray-900">Rp ${Number(product.harga_produk).toLocaleString('id-ID')}</p>
-        </a>
-      `;
+// Encode nama produk untuk URL
+const encodedName = encodeURIComponent(product.nama_produk);
+
+productDiv.innerHTML = `
+  <button 
+    class="cart-btn absolute top-2 right-2 bg-green-200 hover:bg-green-300 rounded-full p-2 z-10 transition-colors duration-200 shadow-sm" 
+    aria-label="Add to cart" 
+    data-product='${JSON.stringify(product)}'>
+    <img src="image/shopping-cart.png" class="w-5 h-5 pointer-events-none" />
+  </button>
+
+  <a href="Buying Page.html?name=${encodedName}" class="block group">
+    <div class="overflow-hidden rounded-xl mb-3">
+      <img 
+        src="${product.gambar_produk}" 
+        alt="${product.nama_produk}" 
+        class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300"
+      />
+    </div>
+
+    <p class="text-[11px] text-gray-500 mb-1">21–25 min</p>
+
+    <div class="flex items-center text-yellow-500 text-sm mb-1">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-4 h-4 mr-1">
+        <path d="M12 .587l3.668 7.431 8.2 1.193-5.934 5.782 1.4 8.171L12 18.896l-7.334 3.868 1.4-8.171L.132 9.211l8.2-1.193z"/>
+      </svg>
+      <span class="font-semibold">${(product.rating || 4.2).toFixed(1)}</span>
+      <span class="text-gray-600 text-xs ml-1">| ${product.review_count || 120} Rating</span>
+    </div>
+
+    <h2 class="text-sm font-semibold text-gray-800 mb-1 leading-snug line-clamp-2">${product.nama_produk}</h2>
+
+    <p class="text-md font-bold text-gray-900">Rp ${Number(product.harga_produk).toLocaleString('id-ID')}</p>
+  </a>
+`;
+
       
       container.appendChild(productDiv);
     });
