@@ -1,4 +1,8 @@
-
+// ========================================
+// DATA DEFAULT PROFIL
+// ========================================
+// Data profil default yang digunakan saat tidak ada data tersimpan
+// atau saat user melakukan reset profil
 const defaultData = {
   firstName: "Suisei",
   lastName: "Hoshimachi", 
@@ -7,42 +11,69 @@ const defaultData = {
   profileImage: "image/Suiseiii pp.jpg"
 };
 
-
+// ========================================
+// DATA PROFIL SAAT INI
+// ========================================
+// Menyimpan data profil yang sedang aktif di memori
+// Diinisialisasi dengan data default
 let currentProfileData = { ...defaultData };
 
-
+// ========================================
+// SISTEM LOAD DATA PROFIL
+// ========================================
+// Fungsi: Memuat data profil dari localStorage
+// Fitur: Error handling, fallback ke data default
 function loadProfileData() {
   const savedData = localStorage.getItem('userProfile');
   if (savedData) {
     try {
+      // Parse data dari localStorage
       currentProfileData = JSON.parse(savedData);
       console.log('Profile data loaded from localStorage:', currentProfileData);
     } catch (error) {
+      // Handle error parsing data
       console.error('Error parsing saved profile data:', error);
+      // Fallback ke data default jika terjadi error
       currentProfileData = { ...defaultData };
     }
   }
+  // Update tampilan profil di UI
   updateProfileDisplay();
 }
 
-
+// ========================================
+// SISTEM SAVE DATA PROFIL
+// ========================================
+// Fungsi: Menyimpan data profil ke localStorage
 function saveProfileData() {
+  // Simpan data profil ke localStorage
   localStorage.setItem('userProfile', JSON.stringify(currentProfileData));
   console.log('Profile data saved to localStorage:', currentProfileData);
 }
 
-
+// ========================================
+// UTILITY FUNCTION: CEK KEBERADAAN DATA PROFIL
+// ========================================
+// Fungsi: Mengecek apakah ada data profil tersimpan di localStorage
 function hasProfileData() {
   return localStorage.getItem('userProfile') !== null;
 }
 
-
+// ========================================
+// UTILITY FUNCTION: AMBIL DATA PROFIL
+// ========================================
+// Fungsi: Mengambil data profil dari localStorage
+// Fitur: Fallback ke data default jika tidak ada data tersimpan
 function getProfileData() {
   const savedData = localStorage.getItem('userProfile');
   return savedData ? JSON.parse(savedData) : defaultData;
 }
 
-
+// ========================================
+// SISTEM UPDATE TAMPILAN PROFIL
+// ========================================
+// Fungsi: Memperbarui tampilan profil di UI
+// Fitur: Update semua field, reset mode edit, disable tombol save
 function updateProfileDisplay() {
   // Update nilai semua field
   document.querySelector('[data-field="firstName"]').value = currentProfileData.firstName;
@@ -51,7 +82,7 @@ function updateProfileDisplay() {
   document.querySelector('[data-field="birthDate"]').value = currentProfileData.birthDate;
   document.getElementById('profileImage').src = currentProfileData.profileImage;
   
-  // Reset semua field ke readonly
+  // Reset semua field ke readonly (non-edit mode)
   const inputs = document.querySelectorAll('input[data-field]');
   inputs.forEach(input => {
     input.readOnly = true;
@@ -59,7 +90,7 @@ function updateProfileDisplay() {
     input.closest('.flex').classList.remove('border-green-500');
   });
   
-  // Disable save button
+  // Disable dan sembunyikan tombol save
   const saveBtn = document.getElementById('saveBtn');
   if (saveBtn) {
     saveBtn.disabled = true;
@@ -67,7 +98,11 @@ function updateProfileDisplay() {
   }
 }
 
-
+// ========================================
+// SISTEM DETEKSI PERUBAHAN
+// ========================================
+// Fungsi: Mengecek apakah ada perubahan pada data profil
+// Fitur: Enable/disable tombol save berdasarkan perubahan
 function checkIfChanged() {
   let changed = false;
   
@@ -90,12 +125,18 @@ function checkIfChanged() {
     }
   }
   
+  // Enable/disable tombol save berdasarkan perubahan
   const saveBtn = document.getElementById("saveBtn");
   if (saveBtn) {
     saveBtn.disabled = !changed;
   }
 }
 
+// ========================================
+// SISTEM TOGGLE EDIT MODE (SEMUA FIELD)
+// ========================================
+// Fungsi: Mengaktifkan/menonaktifkan mode edit untuk semua field
+// Fitur: Visual feedback, toggle tombol edit/save
 function toggleEditAll() {
   const fields = ['firstName', 'lastName', 'email', 'birthDate'];
   const editBtn = document.getElementById('editBtn');
@@ -122,16 +163,22 @@ function toggleEditAll() {
       saveBtn.disabled = false;
     }
     
+    // Tampilkan notifikasi
     showNotification('Mode edit aktif untuk semua field', 'info');
   } else {
     // Jika sudah dalam mode edit, simpan perubahan
     saveAll();
   }
   
+  // Cek perubahan untuk enable/disable tombol save
   checkIfChanged();
 }
 
-
+// ========================================
+// SISTEM TOGGLE EDIT MODE (SINGLE FIELD)
+// ========================================
+// Fungsi: Mengaktifkan/menonaktifkan mode edit untuk satu field
+// Fitur: Visual feedback, auto focus, auto select
 function toggleEditMode(field) {
   const input = document.querySelector(`[data-field="${field}"]`);
   const container = input.closest('.flex');
@@ -145,6 +192,7 @@ function toggleEditMode(field) {
     input.focus();
     input.select();
     
+    // Tampilkan notifikasi
     showNotification(`Mode edit aktif untuk ${getFieldDisplayName(field)}`, 'info');
   } else {
     // Keluar dari mode edit
@@ -162,10 +210,15 @@ function toggleEditMode(field) {
     container.classList.add(borderColors[field]);
   }
   
+  // Cek perubahan untuk enable/disable tombol save
   checkIfChanged();
 }
 
-
+// ========================================
+// SISTEM HANDLE EDIT CLICK
+// ========================================
+// Fungsi: Menangani klik pada tombol edit
+// Fitur: Toggle mode edit atau buka file picker
 function handleEditClick() {
   const isInEditMode = !document.querySelector('[data-field="firstName"]').readOnly;
   
@@ -178,7 +231,11 @@ function handleEditClick() {
   }
 }
 
-
+// ========================================
+// SISTEM SAVE PROFIL
+// ========================================
+// Fungsi: Menyimpan semua perubahan profil
+// Fitur: Validasi input, visual feedback, notifikasi
 function saveAll() {
   const fields = ['firstName', 'lastName', 'email', 'birthDate'];
   let hasChanges = false;
@@ -193,16 +250,18 @@ function saveAll() {
     }
   }
   
-  // Simpan perubahan
+  // Simpan perubahan untuk setiap field
   fields.forEach(field => {
     const input = document.querySelector(`[data-field="${field}"]`);
     const newValue = input.value.trim();
     
+    // Update data jika ada perubahan
     if (currentProfileData[field] !== newValue) {
       currentProfileData[field] = newValue;
       hasChanges = true;
     }
     
+    // Reset field ke readonly mode
     input.readOnly = true;
     input.classList.remove('bg-white');
     
@@ -234,19 +293,33 @@ function saveAll() {
   if (editBtn) editBtn.style.display = 'inline-block';
   if (saveBtn) saveBtn.style.display = 'none';
   
+  // Tampilkan notifikasi sukses
   showNotification("Profil berhasil disimpan! 💾", 'success');
 }
 
-
+// ========================================
+// SISTEM RESET PROFIL
+// ========================================
+// Fungsi: Mereset profil ke pengaturan default
+// Fitur: Konfirmasi user, notifikasi
 function resetProfile() {
   if (confirm("Apakah Anda yakin ingin mereset profil ke pengaturan default?")) {
+    // Reset data ke default
     currentProfileData = { ...defaultData };
+    // Update tampilan
     updateProfileDisplay();
+    // Simpan ke localStorage
     saveProfileData();
+    // Tampilkan notifikasi
     showNotification("Profil berhasil direset! 🔄", 'success');
   }
 }
 
+// ========================================
+// SISTEM CHANGE PROFILE IMAGE
+// ========================================
+// Fungsi: Mengganti gambar profil
+// Fitur: Validasi file, preview image, notifikasi
 function changeProfileImage(event) {
   const file = event.target.files[0];
   if (file) {
@@ -262,31 +335,42 @@ function changeProfileImage(event) {
       return;
     }
     
+    // Baca file sebagai Data URL
     const reader = new FileReader();
     reader.onload = function(e) {
+      // Update tampilan gambar profil
       document.getElementById("profileImage").src = e.target.result;
+      // Cek perubahan untuk enable/disable tombol save
       checkIfChanged();
+      // Tampilkan notifikasi
       showNotification("Gambar profil berhasil diubah! Klik Save untuk menyimpan.", 'info');
     };
     reader.readAsDataURL(file);
   }
 }
 
-
+// ========================================
+// SISTEM VALIDASI FIELD
+// ========================================
+// Fungsi: Memvalidasi nilai field profil
+// Fitur: Validasi khusus per field, notifikasi error
 function validateField(field, value) {
   switch(field) {
     case 'firstName':
     case 'lastName':
+      // Validasi panjang minimal
       if (value.length < 2) {
         showNotification(`${getFieldDisplayName(field)} harus minimal 2 karakter`, 'error');
         return false;
       }
+      // Validasi hanya huruf dan spasi
       if (!/^[a-zA-Z\s]+$/.test(value)) {
         showNotification(`${getFieldDisplayName(field)} hanya boleh mengandung huruf`, 'error');
         return false;
       }
       break;
     case 'email':
+      // Validasi format email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
         showNotification('Format email tidak valid', 'error');
@@ -294,6 +378,7 @@ function validateField(field, value) {
       }
       break;
     case 'birthDate':
+      // Validasi panjang minimal
       if (value.length < 3) {
         showNotification('Tanggal lahir tidak valid', 'error');
         return false;
@@ -303,7 +388,10 @@ function validateField(field, value) {
   return true;
 }
 
-
+// ========================================
+// UTILITY FUNCTION: GET FIELD DISPLAY NAME
+// ========================================
+// Fungsi: Mendapatkan nama tampilan untuk field
 function getFieldDisplayName(field) {
   const displayNames = {
     firstName: 'First Name',
@@ -314,7 +402,11 @@ function getFieldDisplayName(field) {
   return displayNames[field] || field;
 }
 
-
+// ========================================
+// SISTEM NOTIFIKASI
+// ========================================
+// Fungsi: Menampilkan notifikasi
+// Fitur: Warna berbeda per tipe, auto-dismiss, animasi
 function showNotification(message, type = 'info') {
   // Hapus notifikasi yang ada
   const existingNotification = document.querySelector('.notification');
@@ -322,14 +414,20 @@ function showNotification(message, type = 'info') {
     existingNotification.remove();
   }
   
+  // Buat elemen notifikasi
   const notification = document.createElement('div');
+  
+  // Set warna berdasarkan tipe notifikasi
   const typeColors = {
     success: 'bg-green-500',
     error: 'bg-red-500',
     info: 'bg-blue-500'
   };
   
+  // Set class dan style notifikasi
   notification.className = `notification fixed top-4 right-4 ${typeColors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50`;
+  
+  // Set konten notifikasi dengan icon sesuai tipe
   notification.innerHTML = `
     <div class="flex items-center space-x-2">
       <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
@@ -337,9 +435,10 @@ function showNotification(message, type = 'info') {
     </div>
   `;
   
+  // Tambahkan ke DOM
   document.body.appendChild(notification);
   
-  // Auto remove setelah 3 detik
+  // Auto remove setelah 3 detik dengan animasi fade-out
   setTimeout(() => {
     notification.classList.add('fade-out');
     setTimeout(() => {
@@ -350,11 +449,16 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
+// ========================================
+// SISTEM INISIALISASI HALAMAN
+// ========================================
+// Fungsi: Inisialisasi halaman profil saat load
+// Fitur: Load data, setup event listeners, keyboard shortcuts
 window.onload = function() {
   // Load data profil dari localStorage
   loadProfileData();
   
-  // Inisialisasi tombol
+  // Inisialisasi tombol save (hidden by default)
   const saveBtn = document.getElementById('saveBtn');
   if (saveBtn) {
     saveBtn.style.display = 'none'; // Sembunyikan tombol save di awal
@@ -363,14 +467,15 @@ window.onload = function() {
   // Tambahkan event listener ke semua input
   const inputs = document.querySelectorAll("input[data-field]");
   inputs.forEach(input => {
+    // Deteksi perubahan untuk enable/disable tombol save
     input.addEventListener("input", checkIfChanged);
     
-    // Event listener untuk Enter dan Escape
+    // Event listener untuk keyboard shortcuts
     input.addEventListener("keydown", function(e) {
       if (e.key === 'Enter' && !input.readOnly) {
-        saveAll(); // Simpan semua perubahan
+        saveAll(); // Simpan semua perubahan dengan Enter
       } else if (e.key === 'Escape' && !input.readOnly) {
-        // Cancel edit - kembalikan nilai asli
+        // Cancel edit - kembalikan nilai asli dengan Escape
         input.value = currentProfileData[input.getAttribute('data-field')];
         saveAll(); // Keluar dari mode edit
       }
@@ -380,21 +485,24 @@ window.onload = function() {
   // Keyboard shortcut untuk save (Ctrl+S)
   document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.key === 's') {
-      e.preventDefault();
+      e.preventDefault(); // Prevent browser save dialog
       const saveBtn = document.getElementById('saveBtn');
       if (saveBtn && !saveBtn.disabled && saveBtn.style.display !== 'none') {
-        saveAll();
+        saveAll(); // Simpan perubahan
       }
     }
   });
   
-  // Welcome message
+  // Welcome message dengan delay
   setTimeout(() => {
     showNotification('Profil berhasil dimuat! 👋', 'success');
   }, 500);
 };
 
-
+// ========================================
+// EXPORT PROFILE MANAGER API
+// ========================================
+// Expose API untuk digunakan oleh halaman lain
 window.ProfileManager = {
   hasProfileData,
   getProfileData,
