@@ -164,3 +164,21 @@ document.getElementById('checkout-btn').addEventListener('click', () => {
     if (e.target.id === 'popupSuccess') popup.remove();
   });
 });
+
+//profile
+document.addEventListener('DOMContentLoaded', function () {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      try {
+        const profileData = JSON.parse(savedProfile);
+        if (profileData.profileImage) {
+          const profileImgElement = document.getElementById('navProfileImage');
+          if (profileImgElement) {
+            profileImgElement.src = profileData.profileImage;
+          }
+        }
+      } catch (e) {
+        console.error('Gagal memuat gambar profil dari localStorage:', e);
+      }
+    }
+  });

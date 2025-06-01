@@ -159,3 +159,21 @@ document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();      // sinkron badge
   fetchProducts('All');   // tampilkan produk awal
 });
+
+//profile
+document.addEventListener('DOMContentLoaded', function () {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      try {
+        const profileData = JSON.parse(savedProfile);
+        if (profileData.profileImage) {
+          const profileImgElement = document.getElementById('navProfileImage');
+          if (profileImgElement) {
+            profileImgElement.src = profileData.profileImage;
+          }
+        }
+      } catch (e) {
+        console.error('Gagal memuat gambar profil dari localStorage:', e);
+      }
+    }
+  });

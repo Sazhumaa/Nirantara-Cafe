@@ -212,3 +212,22 @@ function getCurrentUserProfile() {
 function isProfileSetup() {
     return localStorage.getItem('userProfile') !== null;
 }
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedProfile = localStorage.getItem('userProfile');
+    if (savedProfile) {
+      try {
+        const profileData = JSON.parse(savedProfile);
+        if (profileData.profileImage) {
+          const profileImgElement = document.getElementById('navProfileImage');
+          if (profileImgElement) {
+            profileImgElement.src = profileData.profileImage;
+          }
+        }
+      } catch (e) {
+        console.error('Gagal memuat gambar profil dari localStorage:', e);
+      }
+    }
+  });
+
