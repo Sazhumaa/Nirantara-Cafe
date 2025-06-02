@@ -5,38 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nirantara Caffe</title>
   <link href="./output.css" rel="stylesheet">  
-  <script src="landingPage.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Poppins', sans-serif;
+
+        /* Custom animations and transitions */
+        .menu-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .menu-hidden {
+            max-height: 0;
+            opacity: 0;
+            visibility: hidden;
+            overflow: hidden;
+        }
+        
+        .menu-visible {
+            max-height: 24rem;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #84cc16;
+            transition: width 0.2s ease-in-out;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-hover {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .backdrop-blur {
+            backdrop-filter: blur(8px);
+        }
     }
   </style>
 </head>
 <body class="bg-[#F4F2EF] text-gray-800">
 
-  <!-- Navbar -->
-<nav class="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-gray-100 shadow-md">
+    <nav class="sticky top-0 z-50 bg-gray-50/95 backdrop-blur border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="relative">
+                        <img
+                            class="w-10 h-10 rounded-full object-cover ring-2 ring-gray-200 shadow-sm"
+                            src="image/Nirantara Coffe.png"
+                            alt="Nirantara Coffee Logo"
+                        />
+                    </div>
+                    <span class="text-xl font-bold text-gray-800 hidden sm:block">Nirantara Coffee</span>
+                </div>
 
-  <div class="text-xl font-bold">
-    <img class="w-12 h-12 rounded-full object-cover" src="image/Nirantara Coffe.png" alt="LOGO">
-  </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <ul class="flex items-center space-x-6">
+                        <li>
+                            <a href="#Home" class="nav-link text-gray-700 hover:text-lime-600 font-medium relative">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#AboutUs" class="nav-link text-gray-700 hover:text-lime-600 font-medium relative">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Product" class="nav-link text-gray-700 hover:text-lime-600 font-medium relative">
+                                Product
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Benefit" class="nav-link text-gray-700 hover:text-lime-600 font-medium relative">
+                                Benefits
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Testimoni" class="nav-link text-gray-700 hover:text-lime-600 font-medium relative">
+                                Testimoni
+                            </a>
+                        </li>
+                    </ul>
 
-  <ul class="flex gap-6 text-1xl text-gray-800">
-    <li><a href="#Home" class="hover:text-green-600">Home</a></li>
-    <li><a href="#AboutUs" class="hover:text-green-600">About Us</a></li>
-    <li><a href="#Product" class="hover:text-green-600">Product</a></li>
-    <li><a href="#Benefit" class="hover:text-green-600">Benefits</a></li>
-    <li><a href="#Testimoni" class="hover:text-green-600">Testimoni</a></li>
-  </ul>
+                    <!-- Tombol Desktop -->
+                    <div class="flex items-center space-x-3">
+                        <a href="signin.html" class="btn-hover bg-lime-500 text-white px-5 py-2 rounded-full text-sm font-medium shadow-sm hover:bg-lime-600">
+                            Sign In
+                        </a>
+                        <a href="signup.html" class="btn-hover bg-white text-gray-700 px-5 py-2 rounded-full text-sm font-medium shadow-sm border border-gray-200 hover:bg-gray-50">
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
 
-  <div class="flex gap-2">
-    <a href="Signinn.html" class="bg-lime-500 text-white px-4 py-2 rounded-full text-sm shadow hover:bg-lime-600">Sign In</a>
-    <a href="SignUp.html" class="bg-white text-gray-800 px-4 py-2 rounded-full text-sm shadow hover:bg-gray-100">Sign Up</a>
-  </div>
-</nav>
+                <!-- Tombol Mobile Hamburger -->
+                <button
+                    id="menu-toggle"
+                    class="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-opacity-50"
+                    aria-label="Toggle menu"
+                >
+                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden menu-transition menu-hidden">
+                <div class="py-4 space-y-3 border-t border-gray-200 bg-gray-50/80">
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#Home" class="mobile-link block px-4 py-2 text-gray-700 hover:text-lime-600 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#AboutUs" class="mobile-link block px-4 py-2 text-gray-700 hover:text-lime-600 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Product" class="mobile-link block px-4 py-2 text-gray-700 hover:text-lime-600 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">
+                                Product
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Benefit" class="mobile-link block px-4 py-2 text-gray-700 hover:text-lime-600 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">
+                                Benefits
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#Testimoni" class="mobile-link block px-4 py-2 text-gray-700 hover:text-lime-600 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">
+                                Testimoni
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="flex flex-col space-y-3 px-4 pt-4 border-t border-gray-200">
+                        <a href="Signinn.html" class="bg-lime-500 text-white px-5 py-3 rounded-full text-sm font-medium shadow-sm hover:bg-lime-600 transition-colors duration-200 text-center">
+                            Sign In
+                        </a>
+                        <a href="SignUp.html" class="bg-white text-gray-700 px-5 py-3 rounded-full text-sm font-medium shadow-sm border border-gray-200 hover:bg-gray-50 transition-colors duration-200 text-center">
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
 <!-- YANG HOME HOME AJAH -->
 <section class="relative w-full max-w-[95.1rem] h-[40.2rem] mx-auto mt-1">
@@ -102,83 +241,93 @@
 
       <!-- Card -->
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
       <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
+        <a href="Signinn.html">
         <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
         <div class="p-4 text-center">
           <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
           <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
           <p class="text-black font-bold">Rp 10.000</p>
-        </div>
-      </div>
-      <div class="bg-white rounded-xl shadow-lg min-w-[200px] max-w-[200px]">
-        <img src="image/gerson-cifuentes-JNhaaPEz3FY-unsplash.webp" alt="Mocha Latte" class="rounded-t-xl w-full h-40 object-cover" />
-        <div class="p-4 text-center">
-          <h3 class="font-semibold text-gray-800">Mocha Latte</h3>
-          <img src="image/rating.png" alt="Rating" class="mx-auto my-2 w-24" />
-          <p class="text-black font-bold">Rp 10.000</p>
+          </a>
         </div>
       </div>
     </div>
@@ -312,5 +461,7 @@
       <a href="#">Facebook</a>
     </div>
   </footer>
+
+<script src="landingPage.js"></script>
 </body>
 </html>

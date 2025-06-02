@@ -56,15 +56,15 @@ function renderCartItems() {
       <div class="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-3xl overflow-hidden p-4 md:p-6 gap-6 relative">
         <div class="flex-1 space-y-3 pl-8">
           <div class="flex items-center gap-3">
-            <div class="w-6 h-6 rounded-full border-2 border-green-600 flex items-center justify-center bg-green-50">
+            <div class="w-6 h-6 flex">
               <!-- Checkbox untuk seleksi item -->
-              <input type="checkbox" class="item-checkbox absolute top-4 left-4 w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500" ${isChecked ? 'checked' : ''} data-index="${index}">
+              <input type="checkbox" class="item-checkbox absolute top-7 - w-5 h-5 text-green-600 border-gray-300 rounded focus:ring-green-500" ${isChecked ? 'checked' : ''} data-index="${index}">
             </div>
             <!-- Nama Produk -->
             <h3 class="text-lg md:text-xl font-semibold text-gray-800">${item.nama_produk}</h3>
           </div>
           <!-- Informasi Tambahan -->
-          <p class="text-sm text-gray-600">Estimasi Pembuatan: 5 menit</p>
+          <p class="text-sm text-gray-600  ">Estimasi Pembuatan: 5 menit</p>
           <p class="text-sm text-gray-600">Estimasi Pengiriman: 7-12 menit</p>
           <!-- Harga Produk -->
           <p class="text-lg font-bold text-green-600">Rp ${Number(item.harga_produk).toLocaleString('id-ID')}</p>

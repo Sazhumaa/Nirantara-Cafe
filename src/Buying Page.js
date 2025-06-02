@@ -298,7 +298,7 @@ async function loadRekomendasiProduk() {
     rekomendasi.forEach(product => {
       const productDiv = document.createElement("div");
       // Styling untuk card produk rekomendasi
-      productDiv.className = "bg-white rounded-2xl shadow-md relative w-[250px] flex-shrink-0 hover:shadow-xl hover:-translate-y-1 transition-transform duration-200 mx-1 my-2 p-3";
+      productDiv.className = "bg-white rounded-2xl shadow-md relative w-[250px] flex-shrink-0 hover:shadow-xl mx-1 my-2 p-3";
 
       // Encode nama produk untuk URL yang aman
       const encodedName = encodeURIComponent(product.nama_produk);
@@ -307,7 +307,7 @@ async function loadRekomendasiProduk() {
       productDiv.innerHTML = `
         <!-- Tombol Add to Cart -->
         <button 
-          class="cart-btn absolute top-2 right-2 bg-green-200 hover:bg-green-300 rounded-full p-2 z-10 transition-colors duration-200 shadow-sm" 
+          class="cart-btn absolute top-2 right-2 bg-green-200  rounded-full p-2 z-10 transition-colors duration-200 shadow-sm" 
           aria-label="Add to cart" 
           data-product='${JSON.stringify(product)}'>
           <img src="image/shopping-cart.png" class="w-5 h-5 pointer-events-none" />
@@ -320,7 +320,7 @@ async function loadRekomendasiProduk() {
             <img 
               src="${product.gambar_produk}" 
               alt="${product.nama_produk}" 
-              class="w-full h-44 object-contain group-hover:scale-105 transition-transform duration-300"
+              class="w-full h-44  "
             />
           </div>
 
