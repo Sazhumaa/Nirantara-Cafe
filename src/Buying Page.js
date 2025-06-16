@@ -4,14 +4,14 @@
 // Fungsi: Mengelola status aktif pada item navigasi
 // Fitur: Menambah/menghapus class 'active' saat item diklik
 
-document.querySelectorAll('.nav-item').forEach(item => {
-  item.addEventListener('click', () => {
+document.querySelectorAll(".nav-item").forEach((item) => {
+  item.addEventListener("click", () => {
     // Hapus class 'active' dari semua item navigasi
-    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+    document.querySelectorAll(".nav-item").forEach((nav) => nav.classList.remove("active"))
     // Tambahkan class 'active' ke item yang diklik
-    item.classList.add('active');
-  });
-});
+    item.classList.add("active")
+  })
+})
 
 // ========================================
 // SISTEM FETCH PRODUK DARI PARAMETER URL
@@ -20,49 +20,49 @@ document.querySelectorAll('.nav-item').forEach(item => {
 // Fitur: Mendukung pencarian produk dengan berbagai parameter
 async function fetchProductFromParams() {
   // Ambil parameter dari URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const idParam = urlParams.get("id");           // Parameter ID produk
-  const nameParam = urlParams.get("name");       // Parameter nama produk
-  const deskripsiParam = urlParams.get("deskripsi"); // Parameter deskripsi
-  const komposisiParam = urlParams.get("komposisi"); // Parameter komposisi
+  const urlParams = new URLSearchParams(window.location.search)
+  const idParam = urlParams.get("id") // Parameter ID produk
+  const nameParam = urlParams.get("name") // Parameter nama produk
+  const deskripsiParam = urlParams.get("deskripsi") // Parameter deskripsi
+  const komposisiParam = urlParams.get("komposisi") // Parameter komposisi
 
   try {
     // Fetch data produk dari API
-    const response = await fetch("http://localhost:8000/produk");
-    const products = await response.json();
+    const response = await fetch("http://localhost:8000/produk")
+    const products = await response.json()
 
-    let produk = null;
-    
+    let produk = null
+
     // Cari produk berdasarkan parameter yang tersedia
     if (idParam) {
       // Pencarian berdasarkan ID
-      produk = products.find(p => p.id == idParam);
+      produk = products.find((p) => p.id == idParam)
     } else if (nameParam) {
       // Pencarian berdasarkan nama (case insensitive)
-      produk = products.find(p => p.nama_produk?.toLowerCase() === nameParam.toLowerCase());
+      produk = products.find((p) => p.nama_produk?.toLowerCase() === nameParam.toLowerCase())
     } else if (deskripsiParam) {
       // Pencarian berdasarkan deskripsi (case insensitive)
-      produk = products.find(p => p.deskripsi_produk?.toLowerCase() === deskripsiParam.toLowerCase());
+      produk = products.find((p) => p.deskripsi_produk?.toLowerCase() === deskripsiParam.toLowerCase())
     } else if (komposisiParam) {
       // Pencarian berdasarkan komposisi (case insensitive)
-      produk = products.find(p => p.komposisi_produk?.toLowerCase() === komposisiParam.toLowerCase());
+      produk = products.find((p) => p.komposisi_produk?.toLowerCase() === komposisiParam.toLowerCase())
     }
 
     // Tampilkan produk jika ditemukan, atau tampilkan pesan error
     if (produk) {
-      displayProduct(produk);
+      displayProduct(produk)
     } else {
       // Tampilkan pesan error jika produk tidak ditemukan
-      document.getElementById("nama-produk").textContent = "Produk tidak ditemukan.";
-      document.getElementById("deskripsi").textContent = "Produk tidak ditemukan.";
-      document.getElementById("komposisi").textContent = "";
+      document.getElementById("nama-produk").textContent = "Produk tidak ditemukan."
+      document.getElementById("deskripsi").textContent = "Produk tidak ditemukan."
+      document.getElementById("komposisi").textContent = ""
     }
   } catch (error) {
     // Handle error saat fetch gagal
-    console.error("Gagal memuat produk:", error);
-    document.getElementById("nama-produk").textContent = "Gagal memuat produk.";
-    document.getElementById("deskripsi").textContent = "Gagal memuat data.";
-    document.getElementById("komposisi").textContent = "Gagal memuat data.";
+    console.error("Gagal memuat produk:", error)
+    document.getElementById("nama-produk").textContent = "Gagal memuat produk."
+    document.getElementById("deskripsi").textContent = "Gagal memuat data."
+    document.getElementById("komposisi").textContent = "Gagal memuat data."
   }
 }
 
@@ -72,8 +72,8 @@ async function fetchProductFromParams() {
 // Fungsi: Menampilkan detail produk lengkap dengan kontrol interaktif
 // Fitur: Layout responsif, kontrol quantity, tombol aksi, kalkulasi harga
 function displayProduct(product) {
-  const container = document.getElementById('product-container');
-  
+  const container = document.getElementById("product-container")
+
   // Generate HTML untuk tampilan produk detail
   container.innerHTML = `
     <div class="flex justify-center items-center bg-gray-100">
@@ -100,8 +100,8 @@ function displayProduct(product) {
             
             <!-- Fitur Promo dan Pengiriman -->
             <ul class="text-sm text-gray-600 space-y-1 mb-4">
-              <li>🎁 Gratis ongkir ke seluruh Indonesia</li>
-              <li>🚚 Estimasi kirim: 1-2 hari</li>
+              <li>🎁 Gratis ongkir ke seluruh Jakarta Barat</li>
+              <li>🚚 Estimasi kirim: 25-30 menit</li>
               <li class="text-green-600">🔥 Promo terbatas hari ini!</li>
             </ul>
             
@@ -118,9 +118,8 @@ function displayProduct(product) {
             <!-- Tombol Aksi -->
             <div class="flex space-x-3 mt-4">
               <!-- Tombol Beli Sekarang -->
-              <a href="buyingPageP2.html">
-              <button id="beliBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold" >Beli Sekarang</button>
-              </a>
+              <button id="beliBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">Beli Sekarang</button>
+              
               <!-- Tombol Tambah ke Keranjang -->
               <button id="add-to-cart" class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
                 <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6" />
@@ -135,7 +134,7 @@ function displayProduct(product) {
         </div>
       </div>
     </div>
-  `;
+  `
 
   // ========================================
   // SISTEM TAMPILAN DESKRIPSI DAN KOMPOSISI
@@ -143,52 +142,100 @@ function displayProduct(product) {
   // Fungsi: Menampilkan deskripsi produk dengan fallback jika tidak ada data
   document.getElementById("deskripsi").innerHTML = product.deskripsi_produk
     ? `<div class="text-gray-700 text-sm leading-relaxed text-center">${product.deskripsi_produk}</div>`
-    : `<div class="text-red-500 text-sm text-center">Deskripsi tidak tersedia.</div>`;
+    : `<div class="text-red-500 text-sm text-center">Deskripsi tidak tersedia.</div>`
 
   // Fungsi: Menampilkan komposisi produk dengan fallback jika tidak ada data
   document.getElementById("komposisi").innerHTML = product.komposisi_produk
     ? `<ul class="list-disc list-inside text-gray-700 text-sm space-y-1 text-center">${product.komposisi_produk}</ul>`
-    : `<div class="text-red-500 text-sm text-center">Komposisi tidak tersedia.</div>`;
+    : `<div class="text-red-500 text-sm text-center">Komposisi tidak tersedia.</div>`
 
   // ========================================
   // SISTEM KONTROL QUANTITY DAN KALKULASI HARGA
   // ========================================
   // Inisialisasi elemen dan variabel untuk kontrol quantity
-  const quantitySpan = document.getElementById("quantity");
-  const incrementBtn = document.getElementById("increment");
-  const decrementBtn = document.getElementById("decrement");
-  const totalHargaEl = document.getElementById("total-harga");
-  let quantity = 1; // Quantity default
-  const hargaSatuan = parseInt(product.harga_produk); // Harga per unit
+  const quantitySpan = document.getElementById("quantity")
+  const incrementBtn = document.getElementById("increment")
+  const decrementBtn = document.getElementById("decrement")
+  const totalHargaEl = document.getElementById("total-harga")
+  let quantity = 1 // Quantity default
+  const hargaSatuan = Number.parseInt(product.harga_produk) // Harga per unit
 
   // Fungsi: Update total harga berdasarkan quantity
   function updateTotalHarga() {
-    totalHargaEl.textContent = (hargaSatuan * quantity).toLocaleString('id-ID');
+    totalHargaEl.textContent = (hargaSatuan * quantity).toLocaleString("id-ID")
   }
 
   // Event Listener: Tombol increment quantity
   incrementBtn.addEventListener("click", () => {
-    quantity++; // Tambah quantity
-    quantitySpan.textContent = quantity; // Update tampilan
-    updateTotalHarga(); // Update total harga
-  });
+    quantity++ // Tambah quantity
+    quantitySpan.textContent = quantity // Update tampilan
+    updateTotalHarga() // Update total harga
+  })
 
   // Event Listener: Tombol decrement quantity (minimum 1)
   decrementBtn.addEventListener("click", () => {
     if (quantity > 1) {
-      quantity--; // Kurangi quantity
-      quantitySpan.textContent = quantity; // Update tampilan
-      updateTotalHarga(); // Update total harga
+      quantity-- // Kurangi quantity
+      quantitySpan.textContent = quantity // Update tampilan
+      updateTotalHarga() // Update total harga
     }
-  });
+  })
 
   // ========================================
   // EVENT LISTENER TAMBAH KE KERANJANG
   // ========================================
   // Event Listener: Tombol "Tambah ke Keranjang"
   document.getElementById("add-to-cart").addEventListener("click", () => {
-    addToCart(product, quantity); // Panggil fungsi addToCart dengan quantity saat ini
-  });
+    addToCart(product, quantity) // Panggil fungsi addToCart dengan quantity saat ini
+  })
+
+  // ========================================
+  // EVENT LISTENER BELI SEKARANG - TRANSFER TO CHECKOUT
+  // ========================================
+  // Event Listener: Tombol "Beli Sekarang"
+  document.getElementById("beliBtn").addEventListener("click", () => {
+    transferToCheckout(product, quantity)
+  })
+}
+
+// ========================================
+// SISTEM TRANSFER DATA KE CHECKOUT
+// ========================================
+// Fungsi: Transfer data produk ke halaman checkout
+function transferToCheckout(product, quantity) {
+  // Prepare order data for checkout page
+  const orderData = {
+    product: {
+      id: product.id,
+      nama: product.nama_produk,
+      deskripsi: product.deskripsi_produk,
+      harga: Number.parseInt(product.harga_produk),
+      gambar: product.gambar_produk,
+      lama_pembuatan: product.lama_pembuatan || "5-7 menit",
+    },
+    quantity: quantity,
+    itemTotal: Number.parseInt(product.harga_produk) * quantity,
+    deliveryFee: 5000,
+    paymentFee: 1000,
+    timestamp: new Date().toISOString(),
+  }
+
+  // Calculate total
+  orderData.totalAmount = orderData.itemTotal + orderData.deliveryFee + orderData.paymentFee
+
+  // Store order data in localStorage
+  localStorage.setItem("checkoutOrder", JSON.stringify(orderData))
+
+  // Show loading feedback
+  const button = document.getElementById("beliBtn")
+  const originalText = button.textContent
+  button.textContent = "Memproses..."
+  button.disabled = true
+
+  // Redirect to checkout page after short delay
+  setTimeout(() => {
+    window.location.href = "checkout-page.html"
+  }, 800)
 }
 
 // ========================================
@@ -202,29 +249,49 @@ function addToCart(product, quantity = 1) {
     nama_produk: product.nama_produk,
     harga_produk: product.harga_produk,
     gambar_produk: product.gambar_produk,
-    jumlah: quantity
-  };
+    jumlah: quantity,
+  }
 
   // Ambil data keranjang dari localStorage
-  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-  
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || []
+
   // Cek apakah item sudah ada di keranjang
-  const existing = cartItems.find(i => i.nama_produk === item.nama_produk);
-  
+  const existing = cartItems.find((i) => i.nama_produk === item.nama_produk)
+
   if (existing) {
     // Jika sudah ada, tambahkan quantity
-    existing.jumlah += quantity;
+    existing.jumlah += quantity
   } else {
     // Jika belum ada, tambahkan item baru
-    cartItems.push(item);
+    cartItems.push(item)
   }
 
   // Simpan kembali ke localStorage
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  
+  localStorage.setItem("cartItems", JSON.stringify(cartItems))
+
   // Update counter keranjang
-  const totalItems = cartItems.reduce((sum, i) => sum + i.jumlah, 0);
-  updateCartCount(totalItems);
+  const totalItems = cartItems.reduce((sum, i) => sum + i.jumlah, 0)
+  updateCartCount(totalItems)
+
+  // Show feedback
+  showAddToCartFeedback(item.nama_produk)
+}
+
+// Fungsi: Tampilkan feedback saat item ditambahkan ke keranjang
+function showAddToCartFeedback(productName) {
+  const notification = document.createElement("div")
+  notification.className =
+    "fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-opacity"
+  notification.textContent = `${productName} ditambahkan ke keranjang`
+
+  document.body.appendChild(notification)
+
+  setTimeout(() => {
+    notification.style.opacity = "0"
+    setTimeout(() => {
+      document.body.removeChild(notification)
+    }, 300)
+  }, 2000)
 }
 
 // ========================================
@@ -232,14 +299,14 @@ function addToCart(product, quantity = 1) {
 // ========================================
 // Fungsi: Update tampilan counter keranjang di UI
 function updateCartCount(newCount) {
-  localStorage.setItem('cartCount', newCount); // Simpan count ke localStorage
-  const el = document.getElementById('cart-count');
-  if (el) el.textContent = newCount; // Update tampilan counter
+  localStorage.setItem("cartCount", newCount) // Simpan count ke localStorage
+  const el = document.getElementById("cart-count")
+  if (el) el.textContent = newCount // Update tampilan counter
 }
 
 // Fungsi: Ambil jumlah item di keranjang dari localStorage
 function getCartCount() {
-  return parseInt(localStorage.getItem('cartCount')) || 0;
+  return Number.parseInt(localStorage.getItem("cartCount")) || 0
 }
 
 // ========================================
@@ -250,27 +317,28 @@ function getCartCount() {
 async function loadRekomendasiProduk() {
   try {
     // Fetch data produk dari API
-    const response = await fetch("http://localhost:8000/produk");
-    const data = await response.json();
-    const container = document.getElementById("rekomendasi-produk");
-    container.innerHTML = ""; // Bersihkan container
+    const response = await fetch("http://localhost:8000/produk")
+    const data = await response.json()
+    const container = document.getElementById("rekomendasi-produk")
+    container.innerHTML = "" // Bersihkan container
 
     // Ambil 4 produk pertama untuk rekomendasi
-    const rekomendasi = data.slice(0, 4);
-    
-    rekomendasi.forEach(product => {
-      const productDiv = document.createElement("div");
+    const rekomendasi = data.slice(0, 4)
+
+    rekomendasi.forEach((product) => {
+      const productDiv = document.createElement("div")
       // Styling untuk card produk rekomendasi
-      productDiv.className = "bg-white rounded-2xl shadow-md relative w-[250px] flex-shrink-0 hover:shadow-xl mx-1 my-2 p-3";
+      productDiv.className =
+        "bg-white rounded-2xl shadow-md relative w-[250px] flex-shrink-0 hover:shadow-xl mx-1 my-2 p-3"
 
       // Encode nama produk untuk URL yang aman
-      const encodedName = encodeURIComponent(product.nama_produk);
+      const encodedName = encodeURIComponent(product.nama_produk)
 
       // Generate HTML untuk card produk rekomendasi
       productDiv.innerHTML = `
         <!-- Tombol Add to Cart -->
         <button 
-          class="cart-btn absolute top-2 right-2 bg-green-200  rounded-full p-2 z-10 transition-colors duration-200 shadow-sm" 
+          class="cart-btn absolute top-2 right-2 bg-green-200 rounded-full p-2 z-10 transition-colors duration-200 shadow-sm" 
           aria-label="Add to cart" 
           data-product='${JSON.stringify(product)}'>
           <img src="image/shopping-cart.png" class="w-5 h-5 pointer-events-none" />
@@ -283,12 +351,12 @@ async function loadRekomendasiProduk() {
             <img 
               src="${product.gambar_produk}" 
               alt="${product.nama_produk}" 
-              class="w-full h-44  "
+              class="w-full h-44"
             />
           </div>
 
           <!-- Estimasi Waktu -->
-          <p class="text-[11px] text-gray-500 mb-1">21–25 min</p>
+          <p class="text-[11px] text-gray-500 mb-1">25–30 min</p>
 
           <!-- Rating -->
           <div class="flex items-center text-yellow-500 text-sm mb-1">
@@ -303,31 +371,30 @@ async function loadRekomendasiProduk() {
           <h2 class="text-sm font-semibold text-gray-800 mb-1 leading-snug line-clamp-2">${product.nama_produk}</h2>
 
           <!-- Harga Produk -->
-          <p class="text-md font-bold text-gray-900">Rp ${Number(product.harga_produk).toLocaleString('id-ID')}</p>
+          <p class="text-md font-bold text-gray-900">Rp ${Number(product.harga_produk).toLocaleString("id-ID")}</p>
         </a>
-      `;
-      
-      container.appendChild(productDiv);
-    });
+      `
+
+      container.appendChild(productDiv)
+    })
 
     // ========================================
     // EVENT LISTENER UNTUK TOMBOL CART REKOMENDASI
     // ========================================
     // Tambahkan event listener untuk semua tombol cart di section rekomendasi
-    const cartButtons = container.querySelectorAll('.cart-btn');
-    cartButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault(); // Cegah default action
-        e.stopPropagation(); // Cegah event bubbling
-        
-        // Ambil data produk dari attribute
-        const productData = JSON.parse(button.getAttribute('data-product'));
-        addToCart(productData, 1); // Tambahkan ke keranjang dengan quantity 1
-      });
-    });
+    const cartButtons = container.querySelectorAll(".cart-btn")
+    cartButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault() // Cegah default action
+        e.stopPropagation() // Cegah event bubbling
 
+        // Ambil data produk dari attribute
+        const productData = JSON.parse(button.getAttribute("data-product"))
+        addToCart(productData, 1) // Tambahkan ke keranjang dengan quantity 1
+      })
+    })
   } catch (error) {
-    console.error("Gagal memuat rekomendasi produk:", error);
+    console.error("Gagal memuat rekomendasi produk:", error)
   }
 }
 
@@ -335,31 +402,31 @@ async function loadRekomendasiProduk() {
 // SISTEM INISIALISASI HALAMAN
 // ========================================
 // Event Listener: Inisialisasi saat DOM selesai dimuat
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Update counter keranjang dari localStorage
-  updateCartCount(getCartCount());
-  
+  updateCartCount(getCartCount())
+
   // Fetch dan tampilkan produk berdasarkan parameter URL
-  fetchProductFromParams();
-  
+  fetchProductFromParams()
+
   // Load produk rekomendasi
-  loadRekomendasiProduk();
+  loadRekomendasiProduk()
 
   // ========================================
   // SISTEM NAVIGASI TAB (DESKRIPSI/KOMPOSISI)
   // ========================================
   // Event Listener: Tab Deskripsi
-  document.getElementById('tab-deskripsi').addEventListener('click', () => {
-    document.getElementById('deskripsi').classList.remove('hidden'); // Tampilkan deskripsi
-    document.getElementById('komposisi').classList.add('hidden');    // Sembunyikan komposisi
-  });
+  document.getElementById("tab-deskripsi").addEventListener("click", () => {
+    document.getElementById("deskripsi").classList.remove("hidden") // Tampilkan deskripsi
+    document.getElementById("komposisi").classList.add("hidden") // Sembunyikan komposisi
+  })
 
   // Event Listener: Tab Komposisi
-  document.getElementById('tab-komposisi').addEventListener('click', () => {
-    document.getElementById('komposisi').classList.remove('hidden'); // Tampilkan komposisi
-    document.getElementById('deskripsi').classList.add('hidden');    // Sembunyikan deskripsi
-  });
-});
+  document.getElementById("tab-komposisi").addEventListener("click", () => {
+    document.getElementById("komposisi").classList.remove("hidden") // Tampilkan komposisi
+    document.getElementById("deskripsi").classList.add("hidden") // Sembunyikan deskripsi
+  })
+})
 
 // ========================================
 // SISTEM MANAJEMEN PROFIL USER
@@ -367,26 +434,26 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fungsi: Memuat dan menampilkan data profil user di halaman lain
 // Fitur: Sinkronisasi profil antar halaman, fallback ke data default
 function loadUserProfileInOtherPage() {
-    // Cek apakah ada data profil tersimpan di localStorage
-    const savedProfile = localStorage.getItem('userProfile');
-    
-    if (savedProfile) {
-        try {
-            const profileData = JSON.parse(savedProfile);
-            
-            // Update elemen-elemen yang menampilkan info user
-            updateUserDisplay(profileData);
-            
-            console.log('Profile loaded:', profileData);
-        } catch (error) {
-            console.error('Error loading profile:', error);
-            // Gunakan data default jika ada error parsing
-            useDefaultProfile();
-        }
-    } else {
-        // Gunakan data default jika belum ada profil tersimpan
-        useDefaultProfile();
+  // Cek apakah ada data profil tersimpan di localStorage
+  const savedProfile = localStorage.getItem("userProfile")
+
+  if (savedProfile) {
+    try {
+      const profileData = JSON.parse(savedProfile)
+
+      // Update elemen-elemen yang menampilkan info user
+      updateUserDisplay(profileData)
+
+      console.log("Profile loaded:", profileData)
+    } catch (error) {
+      console.error("Error loading profile:", error)
+      // Gunakan data default jika ada error parsing
+      useDefaultProfile()
     }
+  } else {
+    // Gunakan data default jika belum ada profil tersimpan
+    useDefaultProfile()
+  }
 }
 
 // ========================================
@@ -394,29 +461,29 @@ function loadUserProfileInOtherPage() {
 // ========================================
 // Fungsi: Update tampilan user di berbagai elemen halaman
 function updateUserDisplay(profileData) {
-    // Update nama user di header/navbar
-    const userNameElement = document.querySelector('.user-name');
-    if (userNameElement) {
-        userNameElement.textContent = `${profileData.firstName} ${profileData.lastName}`;
-    }
-    
-    // Update foto profil di header/navbar
-    const userAvatarElement = document.querySelector('.user-avatar');
-    if (userAvatarElement) {
-        userAvatarElement.src = profileData.profileImage;
-    }
-    
-    // Update email di footer atau info section
-    const userEmailElement = document.querySelector('.user-email');
-    if (userEmailElement) {
-        userEmailElement.textContent = profileData.email;
-    }
-    
-    // Update welcome message
-    const welcomeElement = document.querySelector('.welcome-message');
-    if (welcomeElement) {
-        welcomeElement.textContent = `Welcome back, ${profileData.firstName}!`;
-    }
+  // Update nama user di header/navbar
+  const userNameElement = document.querySelector(".user-name")
+  if (userNameElement) {
+    userNameElement.textContent = `${profileData.firstName} ${profileData.lastName}`
+  }
+
+  // Update foto profil di header/navbar
+  const userAvatarElement = document.querySelector(".user-avatar")
+  if (userAvatarElement) {
+    userAvatarElement.src = profileData.profileImage
+  }
+
+  // Update email di footer atau info section
+  const userEmailElement = document.querySelector(".user-email")
+  if (userEmailElement) {
+    userEmailElement.textContent = profileData.email
+  }
+
+  // Update welcome message
+  const welcomeElement = document.querySelector(".welcome-message")
+  if (welcomeElement) {
+    welcomeElement.textContent = `Welcome back, ${profileData.firstName}!`
+  }
 }
 
 // ========================================
@@ -424,15 +491,15 @@ function updateUserDisplay(profileData) {
 // ========================================
 // Fungsi: Gunakan data profil default jika tidak ada data tersimpan
 function useDefaultProfile() {
-    const defaultData = {
-        firstName: "Suisei",
-        lastName: "Hoshimachi",
-        email: "suiseihoshimachi@gmail.com",
-        birthDate: "22 Maret",
-        profileImage: "image/Suiseiii pp.jpg"
-    };
-    
-    updateUserDisplay(defaultData);
+  const defaultData = {
+    firstName: "Suisei",
+    lastName: "Hoshimachi",
+    email: "suiseihoshimachi@gmail.com",
+    birthDate: "22 Maret",
+    profileImage: "image/Suiseiii pp.jpg",
+  }
+
+  updateUserDisplay(defaultData)
 }
 
 // ========================================
@@ -440,33 +507,33 @@ function useDefaultProfile() {
 // ========================================
 // Event Listener: Listen untuk perubahan localStorage dari tab lain
 // Fitur: Sinkronisasi real-time antar tab browser
-window.addEventListener('storage', function(e) {
-    if (e.key === 'userProfile') {
-        console.log('Profile updated in another tab');
-        loadUserProfileInOtherPage(); // Reload profil jika ada perubahan
-    }
-});
+window.addEventListener("storage", (e) => {
+  if (e.key === "userProfile") {
+    console.log("Profile updated in another tab")
+    loadUserProfileInOtherPage() // Reload profil jika ada perubahan
+  }
+})
 
 // ========================================
 // INISIALISASI SISTEM PROFIL
 // ========================================
 // Event Listener: Panggil fungsi load profil saat halaman dimuat
-document.addEventListener('DOMContentLoaded', function() {
-    loadUserProfileInOtherPage();
-});
+document.addEventListener("DOMContentLoaded", () => {
+  loadUserProfileInOtherPage()
+})
 
 // ========================================
 // UTILITY FUNCTIONS UNTUK PROFIL
 // ========================================
 // Fungsi utility: Mendapatkan data profil saat ini
 function getCurrentUserProfile() {
-    const savedProfile = localStorage.getItem('userProfile');
-    return savedProfile ? JSON.parse(savedProfile) : null;
+  const savedProfile = localStorage.getItem("userProfile")
+  return savedProfile ? JSON.parse(savedProfile) : null
 }
 
 // Fungsi utility: Mengecek apakah user sudah setup profil
 function isProfileSetup() {
-    return localStorage.getItem('userProfile') !== null;
+  return localStorage.getItem("userProfile") !== null
 }
 
 // ========================================
@@ -474,20 +541,20 @@ function isProfileSetup() {
 // ========================================
 // Event Listener: Update gambar profil di navbar saat halaman dimuat
 // Fitur: Sinkronisasi gambar profil dari localStorage ke elemen navbar
-document.addEventListener('DOMContentLoaded', function () {
-    const savedProfile = localStorage.getItem('userProfile');
-    if (savedProfile) {
-      try {
-        const profileData = JSON.parse(savedProfile);
-        if (profileData.profileImage) {
-          // Update gambar profil di navbar
-          const profileImgElement = document.getElementById('navProfileImage');
-          if (profileImgElement) {
-            profileImgElement.src = profileData.profileImage;
-          }
+document.addEventListener("DOMContentLoaded", () => {
+  const savedProfile = localStorage.getItem("userProfile")
+  if (savedProfile) {
+    try {
+      const profileData = JSON.parse(savedProfile)
+      if (profileData.profileImage) {
+        // Update gambar profil di navbar
+        const profileImgElement = document.getElementById("navProfileImage")
+        if (profileImgElement) {
+          profileImgElement.src = profileData.profileImage
         }
-      } catch (e) {
-        console.error('Gagal memuat gambar profil dari localStorage:', e);
       }
+    } catch (e) {
+      console.error("Gagal memuat gambar profil dari localStorage:", e)
     }
-});
+  }
+})

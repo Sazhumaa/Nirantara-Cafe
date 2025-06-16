@@ -512,7 +512,7 @@
             document.getElementById('cart-count').textContent = count;
         }
 
-        // Process order
+        // Process order - SIMPLIFIED VERSION FOR INDEX.HTML
         async function processOrder() {
             // Step 1: Validate payment method selection
             const selectedPayment = document.querySelector('input[name="payment"]:checked');
@@ -534,13 +534,7 @@
                 return;
             }
 
-            // Step 4: Show confirmation dialog
-            const confirmed = await showOrderConfirmation();
-            if (!confirmed) {
-                return;
-            }
-
-            // Step 5: Process payment with loading state
+            // Step 4: Process payment with loading state (no confirmation dialog)
             await processPaymentWithLoading(selectedPayment.value, deliveryAddress);
         }
 
@@ -571,220 +565,126 @@
             }, 4000);
         }
 
-        // Show order confirmation dialog
-        function showOrderConfirmation() {
-            return new Promise((resolve) => {
+        // Process payment with loading state
+        async function processPaymentWithLoading(paymentMethod, deliveryAddress) {
+            // Show loading state
+            const button = document.querySelector('button[onclick="processOrder()"]');
+            const originalText = button.textContent;
+            button.textContent = 'Memproses Pembayaran...';
+            button.disabled = true;
+
+            try {
+                // Calculate totals
                 const subtotal = cart.reduce((total, item) => total + (item.harga * item.quantity), 0);
-                const total = subtotal + 6000; // Including delivery and payment fees
+                const deliveryFee = 5000;
+                const paymentFee = 1000;
+                const total = subtotal + deliveryFee + paymentFee;
 
-                // Create confirmation modal
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                modal.innerHTML = `
-            <div class="bg-white rounded-xl shadow-lg p-6 max-w-md w-full mx-4">
-                <div class="text-center mb-4">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-2">Konfirmasi Pesanan</h2>
-                    <p class="text-sm text-gray-600">Pastikan detail pesanan Anda sudah benar</p>
+            // Prepare order data
+            const orderData = {
+                items: cart.map(item => ({
+                    id: item.id,
+                    nama: item.nama,
+                    harga: item.harga,
+                    quantity: item.quantity,
+                    subtotal: item.harga * item.quantity
+                })),
+                payment_method: paymentMethod,
+                delivery_address: deliveryAddress,
+                subtotal: subtotal,
+                delivery_fee: deliveryFee,
+                payment_fee: paymentFee,
+                total: total,
+                order_time: new Date().toISOString(),
+                status: 'confirmed'
+            };
+
+            // Simulate API call with realistic delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Here you would typically send the order to your backend
+            console.log('Order processed successfully:', orderData);
+
+            // Show success modal ONLY HERE
+            showOrderSuccessModal(orderData);
+
+            // Clear cart after successful order
+            cart = [];
+            updateCartDisplay();
+            updateCartCount();
+
+        } catch (error) {
+            console.error('Error processing payment:', error);
+            showValidationError('Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.');
+        } finally {
+            // Reset button
+            button.textContent = originalText;
+            button.disabled = false;
+        }
+    }
+
+    // Show order success modal - ONLY FOR INDEX.HTML
+    function showOrderSuccessModal(orderData) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-white rounded-xl shadow-lg p-6 text-center max-w-md w-full mx-4">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
                 </div>
-
-                <div class="space-y-3 mb-6">
-                    <div class="bg-gray-50 rounded-lg p-3">
-                        <h3 class="font-semibold text-sm mb-2">Item Pesanan:</h3>
-                        ${cart.map(item => `
-                            <div class="flex justify-between text-xs">
+                
+                <h2 class="text-xl font-bold text-green-600 mb-2">Pesanan Berhasil!</h2>
+                <p class="text-sm text-gray-600 mb-4">Terima kasih! Pesanan Anda telah berhasil diproses.</p>
+                
+                <div class="bg-gray-50 rounded-lg p-4 mb-4 text-left">
+                    <h3 class="font-semibold text-sm mb-2">Detail Pesanan:</h3>
+                    <div class="space-y-1 text-xs">
+                        ${orderData.items.map(item => `
+                            <div class="flex justify-between">
                                 <span>${item.nama} (${item.quantity}x)</span>
-                                <span>Rp ${formatPrice(item.harga * item.quantity)}</span>
+                                <span>Rp ${formatPrice(item.subtotal)}</span>
                             </div>
                         `).join('')}
-                    </div>
-                    
-                    <div class="flex justify-between text-sm">
-                        <span>Total Pembayaran:</span>
-                        <span class="font-semibold">Rp ${formatPrice(total)}</span>
-                    </div>
-                    
-                    <div class="flex justify-between text-sm">
-                        <span>Metode Pembayaran:</span>
-                        <span class="font-semibold">${document.querySelector('input[name="payment"]:checked').value.toUpperCase()}</span>
+                        <hr class="my-2">
+                        <div class="flex justify-between font-semibold">
+                            <span>Total:</span>
+                            <span>Rp ${formatPrice(orderData.total)}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Pembayaran:</span>
+                            <span>${orderData.payment_method.toUpperCase()}</span>
+                        </div>
                     </div>
                 </div>
-
-                <div class="flex gap-3">
-                    <button onclick="closeConfirmationModal(false)" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                        Batal
-                    </button>
-                    <button onclick="closeConfirmationModal(true)" class="flex-1 px-4 py-2 bg-custom-green text-white rounded-lg hover:bg-green-600 transition-colors">
-                        Konfirmasi Pesanan
-                    </button>
+                
+                <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                    <p class="text-xs text-blue-800">
+                        <strong>Estimasi Pengiriman:</strong> 25-30 menit<br>
+                        <strong>Status:</strong> Pesanan sedang diproses
+                    </p>
                 </div>
+                
+                <button onclick="closeSuccessModal()" class="w-full bg-custom-green hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                    Tutup
+                </button>
             </div>
         `;
 
         document.body.appendChild(modal);
-
-        // Store resolve function globally for button handlers
-        window.confirmationResolve = resolve;
-        window.confirmationModal = modal;
-    });
-}
-
-// Close confirmation modal
-function closeConfirmationModal(confirmed) {
-    if (window.confirmationModal && document.body.contains(window.confirmationModal)) {
-        document.body.removeChild(window.confirmationModal);
+        window.successModal = modal;
     }
-    if (window.confirmationResolve) {
-        window.confirmationResolve(confirmed);
+
+    // Close success modal
+    function closeSuccessModal() {
+        if (window.successModal && document.body.contains(window.successModal)) {
+            document.body.removeChild(window.successModal);
+        }
     }
-}
 
-// Process payment with loading state
-async function processPaymentWithLoading(paymentMethod, deliveryAddress) {
-    // Show loading state
-    const loadingModal = showLoadingModal();
-
-    try {
-        // Calculate totals
-        const subtotal = cart.reduce((total, item) => total + (item.harga * item.quantity), 0);
-        const deliveryFee = 5000;
-        const paymentFee = 1000;
-        const total = subtotal + deliveryFee + paymentFee;
-
-        // Prepare order data
-        const orderData = {
-            items: cart.map(item => ({
-                id: item.id,
-                nama: item.nama,
-                harga: item.harga,
-                quantity: item.quantity,
-                subtotal: item.harga * item.quantity
-            })),
-            payment_method: paymentMethod,
-            delivery_address: deliveryAddress,
-            subtotal: subtotal,
-            delivery_fee: deliveryFee,
-            payment_fee: paymentFee,
-            total: total,
-            order_time: new Date().toISOString(),
-            status: 'pending'
-        };
-
-        // Simulate API call with realistic delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        // Here you would typically send the order to your backend
-        console.log('Order processed successfully:', orderData);
-
-        // Close loading modal
-        closeLoadingModal();
-
-        // Show success modal
-        showOrderSuccessModal(orderData);
-
-        // Clear cart after successful order
-        cart = [];
-        updateCartDisplay();
-        updateCartCount();
-
-    } catch (error) {
-        console.error('Error processing payment:', error);
-        closeLoadingModal();
-        showValidationError('Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.');
-    }
-}
-
-// Show loading modal
-function showLoadingModal() {
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-    modal.innerHTML = `
-        <div class="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-custom-green mx-auto mb-4"></div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Memproses Pembayaran</h3>
-            <p class="text-sm text-gray-600">Mohon tunggu, pesanan Anda sedang diproses...</p>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    window.loadingModal = modal;
-    return modal;
-}
-
-// Close loading modal
-function closeLoadingModal() {
-    if (window.loadingModal && document.body.contains(window.loadingModal)) {
-        document.body.removeChild(window.loadingModal);
-    }
-}
-
-// Show order success modal
-function showOrderSuccessModal(orderData) {
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-    modal.innerHTML = `
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center max-w-md w-full mx-4">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-            </div>
-            
-            <h2 class="text-xl font-bold text-green-600 mb-2">Pesanan Berhasil!</h2>
-            <p class="text-sm text-gray-600 mb-4">Terima kasih! Pesanan Anda telah berhasil diproses.</p>
-            
-            <div class="bg-gray-50 rounded-lg p-4 mb-4 text-left">
-                <h3 class="font-semibold text-sm mb-2">Detail Pesanan:</h3>
-                <div class="space-y-1 text-xs">
-                    ${orderData.items.map(item => `
-                        <div class="flex justify-between">
-                            <span>${item.nama} (${item.quantity}x)</span>
-                            <span>Rp ${formatPrice(item.subtotal)}</span>
-                        </div>
-                    `).join('')}
-                    <hr class="my-2">
-                    <div class="flex justify-between font-semibold">
-                        <span>Total:</span>
-                        <span>Rp ${formatPrice(orderData.total)}</span>
-                    </div>
-                    <div class="flex justify-between text-gray-600">
-                        <span>Pembayaran:</span>
-                        <span>${orderData.payment_method.toUpperCase()}</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-blue-50 rounded-lg p-3 mb-4">
-                <p class="text-xs text-blue-800">
-                    <strong>Estimasi Pengiriman:</strong> 25-30 menit<br>
-                    <strong>Status:</strong> Pesanan sedang diproses
-                </p>
-            </div>
-            
-            <button onclick="closeSuccessModal()" class="w-full bg-custom-green hover:bg-green-600 text-white py-3 rounded-lg font-semibold transition-colors">
-                Tutup
-            </button>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-    window.successModal = modal;
-}
-
-// Close success modal
-function closeSuccessModal() {
-    if (window.successModal && document.body.contains(window.successModal)) {
-        document.body.removeChild(window.successModal);
-    }
-}
-
-// Global function exports for modal handlers
-window.closeConfirmationModal = closeConfirmationModal;
-window.closeSuccessModal = closeSuccessModal;
+    // Global function exports for modal handlers
+    window.closeSuccessModal = closeSuccessModal;
         
 
         // Format price

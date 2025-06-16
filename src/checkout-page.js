@@ -31,7 +31,14 @@ function loadOrderData() {
     const storedOrder = localStorage.getItem("checkoutOrder")
     if (storedOrder) {
       orderData = JSON.parse(storedOrder)
-      displayOrderDetails()
+
+      // Check if it's multiple items from cart or single item from buying page
+      if (orderData.isMultipleItems) {
+        displayMultipleOrderDetails()
+      } else {
+        displayOrderDetails()
+      }
+
       displayPaymentBreakdown()
     } else {
       showOrderError()
@@ -87,6 +94,43 @@ function displayOrderDetails() {
     `
 }
 
+function displayMultipleOrderDetails() {
+  if (!orderData || !orderData.items) return
+
+  const container = document.getElementById("order-product-card")
+
+  container.innerHTML = `
+    <div class="space-y-4">
+      <h3 class="font-semibold text-lg text-gray-900 mb-4">Pesanan Anda (${orderData.items.length} item)</h3>
+      ${orderData.items
+        .map(
+          (item, index) => `
+        <div class="flex gap-4 p-4 bg-gray-50 rounded-lg">
+          <!-- Product Image -->
+          <div class="w-16 h-16 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <img src="${item.gambar}" alt="${item.nama}" 
+                 class="w-14 h-14 object-cover rounded-lg"
+                 onerror="this.src='/placeholder.svg?height=56&width=56'">
+          </div>
+          
+          <!-- Product Info -->
+          <div class="flex-1">
+            <h4 class="font-semibold text-sm text-gray-900">${item.nama}</h4>
+            <p class="text-xs text-gray-500">${item.deskripsi}</p>
+            <p class="text-xs text-gray-500">Lama pembuatan: ${item.lama_pembuatan}</p>
+            <div class="flex justify-between items-center mt-2">
+              <p class="font-semibold text-sm text-gray-900">Rp ${formatPrice(item.harga)}</p>
+              <span class="text-sm text-gray-600">Qty: ${item.quantity}</span>
+            </div>
+          </div>
+        </div>
+      `,
+        )
+        .join("")}
+    </div>
+  `
+}
+
 // ========================================
 // PAYMENT BREAKDOWN SYSTEM
 // ========================================
@@ -95,24 +139,47 @@ function displayPaymentBreakdown() {
 
   const container = document.getElementById("payment-breakdown")
 
-  container.innerHTML = `
-        <div class="flex justify-between">
-            <span class="text-gray-600">Harga (${orderData.quantity}x)</span>
-            <span class="text-gray-900">Rp ${formatPrice(orderData.itemTotal)}</span>
-        </div>
-        <div class="flex justify-between">
-            <span class="text-gray-600">Biaya Pengiriman</span>
-            <span class="text-gray-900">Rp ${formatPrice(orderData.deliveryFee)}</span>
-        </div>
-        <div class="flex justify-between">
-            <span class="text-gray-600">Biaya Pembayaran</span>
-            <span class="text-gray-900">Rp ${formatPrice(orderData.paymentFee)}</span>
-        </div>
-        <div class="flex justify-between border-t border-gray-200 pt-3">
-            <span class="text-gray-600">Total Pembayaran</span>
-            <span class="text-gray-900 font-semibold">Rp ${formatPrice(orderData.totalAmount)}</span>
-        </div>
+  if (orderData.isMultipleItems) {
+    // Multiple items breakdown
+    container.innerHTML = `
+      <div class="flex justify-between">
+          <span class="text-gray-600">Subtotal (${orderData.totalQuantity} item)</span>
+          <span class="text-gray-900">Rp ${formatPrice(orderData.itemTotal)}</span>
+      </div>
+      <div class="flex justify-between">
+          <span class="text-gray-600">Biaya Pengiriman</span>
+          <span class="text-gray-900">Rp ${formatPrice(orderData.deliveryFee)}</span>
+      </div>
+      <div class="flex justify-between">
+          <span class="text-gray-600">Biaya Pembayaran</span>
+          <span class="text-gray-900">Rp ${formatPrice(orderData.paymentFee)}</span>
+      </div>
+      <div class="flex justify-between border-t border-gray-200 pt-3">
+          <span class="text-gray-600">Total Pembayaran</span>
+          <span class="text-gray-900 font-semibold">Rp ${formatPrice(orderData.totalAmount)}</span>
+      </div>
     `
+  } else {
+    // Single item breakdown (existing logic)
+    container.innerHTML = `
+      <div class="flex justify-between">
+          <span class="text-gray-600">Harga (${orderData.quantity}x)</span>
+          <span class="text-gray-900">Rp ${formatPrice(orderData.itemTotal)}</span>
+      </div>
+      <div class="flex justify-between">
+          <span class="text-gray-600">Biaya Pengiriman</span>
+          <span class="text-gray-900">Rp ${formatPrice(orderData.deliveryFee)}</span>
+      </div>
+      <div class="flex justify-between">
+          <span class="text-gray-600">Biaya Pembayaran</span>
+          <span class="text-gray-900">Rp ${formatPrice(orderData.paymentFee)}</span>
+      </div>
+      <div class="flex justify-between border-t border-gray-200 pt-3">
+          <span class="text-gray-600">Total Pembayaran</span>
+          <span class="text-gray-900 font-semibold">Rp ${formatPrice(orderData.totalAmount)}</span>
+      </div>
+    `
+  }
 
   // Update final total
   document.getElementById("final-total").textContent = `Rp ${formatPrice(orderData.totalAmount)}`
@@ -183,12 +250,12 @@ function setupEventListeners() {
 // ========================================
 async function processPayment() {
   if (!orderData) {
-    alert("Data pesanan tidak ditemukan")
+    showValidationError("Data pesanan tidak ditemukan")
     return
   }
 
   if (!selectedPaymentMethod) {
-    alert("Silakan pilih metode pembayaran")
+    showValidationError("Silakan pilih metode pembayaran")
     return
   }
 
@@ -211,55 +278,100 @@ async function processPayment() {
     button.textContent = "Memproses..."
     button.disabled = true
 
-    // Simulate API call
+    // Simulate API call with proper delay
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
     // Here you would typically send the order to your backend
     console.log("Final Order:", finalOrder)
 
+    // Reset button first
+    button.textContent = originalText
+    button.disabled = false
+
     // Show success modal
-    showOrderSuccess(finalOrder)
+    showOrderSuccessModal(finalOrder)
 
     // Clear order data from localStorage
     localStorage.removeItem("checkoutOrder")
+
+    // Clear cart items if this was a cart checkout
+    if (orderData.isMultipleItems) {
+      // Remove processed items from cart
+      const cartItems = JSON.parse(localStorage.getItem("cartItems")) || []
+      const remainingItems = cartItems.filter((item) => item.selected === false)
+      localStorage.setItem("cartItems", JSON.stringify(remainingItems))
+
+      // Update cart count
+      const newCartCount = remainingItems.reduce((sum, item) => sum + (item.jumlah || 1), 0)
+      localStorage.setItem("cartCount", newCartCount)
+    }
   } catch (error) {
     console.error("Error processing payment:", error)
-    alert("Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.")
 
     // Reset button
     const button = document.getElementById("process-payment")
     button.textContent = "Beli Sekarang"
     button.disabled = false
+
+    showValidationError("Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.")
   }
 }
 
 // ========================================
 // ORDER SUCCESS MODAL SYSTEM
 // ========================================
-function showOrderSuccess(finalOrder) {
-  const modal = document.getElementById("orderSuccessModal")
+function showOrderSuccessModal(finalOrder) {
+  // Populate order details
   const orderDetails = document.getElementById("orderDetails")
 
-  orderDetails.innerHTML = `
-        <div class="text-left space-y-2">
-            <p><strong>Produk:</strong> ${finalOrder.product.nama}</p>
-            <p><strong>Jumlah:</strong> ${finalOrder.quantity}</p>
-            <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
-            <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
-            <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
-            <p><strong>Estimasi:</strong> 25-30 menit</p>
-        </div>
+  if (finalOrder.isMultipleItems) {
+    // Multiple items success modal
+    orderDetails.innerHTML = `
+      <div class="text-left space-y-2">
+          <p><strong>Jumlah Item:</strong> ${finalOrder.items.length} produk</p>
+          <p><strong>Total Quantity:</strong> ${finalOrder.totalQuantity}</p>
+          <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
+          <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
+          <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
+          <p><strong>Estimasi:</strong> 25-30 menit</p>
+          <div class="mt-3 p-2 bg-gray-50 rounded">
+            <p class="text-sm font-medium">Item yang dipesan:</p>
+            ${finalOrder.items
+              .map(
+                (item) => `
+              <p class="text-xs text-gray-600">• ${item.nama} (${item.quantity}x)</p>
+            `,
+              )
+              .join("")}
+          </div>
+      </div>
     `
+  } else {
+    // Single item success modal (existing logic)
+    orderDetails.innerHTML = `
+      <div class="text-left space-y-2">
+          <p><strong>Produk:</strong> ${finalOrder.product.nama}</p>
+          <p><strong>Jumlah:</strong> ${finalOrder.quantity}</p>
+          <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
+          <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
+          <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
+          <p><strong>Estimasi:</strong> 25-30 menit</p>
+      </div>
+    `
+  }
 
+  // Show the modal by removing hidden class
+  const modal = document.getElementById("orderSuccessModal")
   modal.classList.remove("hidden")
 }
 
 function closeOrderModal() {
-  document.getElementById("orderSuccessModal").classList.add("hidden")
+  const modal = document.getElementById("orderSuccessModal")
+  modal.classList.add("hidden")
 
-  // Redirect to home page or order tracking page
+  // Redirect to home page or order tracking page after short delay
   setTimeout(() => {
-    window.location.href = "product-page.html"
+    window.location.href = "Home Page.html"
   }, 500)
 }
 
@@ -277,7 +389,7 @@ function showOrderError() {
             </div>
             <p class="text-sm text-gray-600 mb-2">Data pesanan tidak ditemukan</p>
             <p class="text-xs text-gray-500 mb-3">Silakan kembali ke halaman produk</p>
-            <button onclick="window.location.href='product-page.html'" class="px-4 py-2 bg-custom-green text-white rounded-lg text-sm hover:bg-green-600">
+            <button onclick="window.location.href='Buying Page.html'" class="px-4 py-2 bg-custom-green text-white rounded-lg text-sm hover:bg-green-600">
                 Kembali ke Produk
             </button>
         </div>
@@ -285,13 +397,47 @@ function showOrderError() {
 }
 
 // ========================================
+// VALIDATION ERROR SYSTEM
+// ========================================
+function showValidationError(message) {
+  // Create error notification
+  const notification = document.createElement("div")
+  notification.className =
+    "fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-opacity"
+  notification.innerHTML = `
+    <div class="flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>${message}</span>
+    </div>
+  `
+
+  document.body.appendChild(notification)
+
+  // Auto remove after 4 seconds
+  setTimeout(() => {
+    notification.style.opacity = "0"
+    setTimeout(() => {
+      if (document.body.contains(notification)) {
+        document.body.removeChild(notification)
+      }
+    }, 300)
+  }, 4000)
+}
+
+// ========================================
 // MAP FUNCTIONALITY
 // ========================================
 function initMap() {
   const jakartaBaratCenter = [-6.1667, 106.7833]
+  let L = window.L
+  if (typeof leaflet !== "undefined") {
+    L = leaflet
+  } else {
+    L = window.L
+  }
   map = L.map("map").setView(jakartaBaratCenter, 12)
-
-  L = L || require("leaflet")
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors",
@@ -313,6 +459,8 @@ function addJakartaBaratRestaurants() {
     { name: "McDonald's Grogol", lat: -6.1667, lng: 106.7833, type: "fastfood" },
     { name: "Cafe Tujuh Belas", lat: -6.167, lng: 106.784, type: "cafe" },
   ]
+
+  const L = window.L
 
   restaurants.forEach((restaurant) => {
     const color = restaurant.type === "cafe" ? "#8B5CF6" : restaurant.type === "restaurant" ? "#EF4444" : "#F59E0B"

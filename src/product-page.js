@@ -247,7 +247,7 @@ function transferToCheckout(product) {
   // Store order data in localStorage
   localStorage.setItem("checkoutOrder", JSON.stringify(orderData))
 
-  // Show loading feedback
+  // Show loading feedback briefly
   const button = document.getElementById("beliBtn")
   const originalText = button.textContent
   button.textContent = "Memproses..."
@@ -256,7 +256,7 @@ function transferToCheckout(product) {
   // Redirect to checkout page after short delay
   setTimeout(() => {
     window.location.href = "checkout-page.html"
-  }, 500)
+  }, 800)
 }
 
 // ========================================
