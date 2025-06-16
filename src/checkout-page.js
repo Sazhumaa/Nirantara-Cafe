@@ -321,59 +321,58 @@ async function processPayment() {
 // ORDER SUCCESS MODAL SYSTEM
 // ========================================
 function showOrderSuccessModal(finalOrder) {
-  // Populate order details
-  const orderDetails = document.getElementById("orderDetails")
+  const orderDetails = document.getElementById("orderDetails");
 
   if (finalOrder.isMultipleItems) {
-    // Multiple items success modal
     orderDetails.innerHTML = `
       <div class="text-left space-y-2">
-          <p><strong>Jumlah Item:</strong> ${finalOrder.items.length} produk</p>
-          <p><strong>Total Quantity:</strong> ${finalOrder.totalQuantity}</p>
-          <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
-          <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
-          <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
-          <p><strong>Estimasi:</strong> 25-30 menit</p>
-          <div class="mt-3 p-2 bg-gray-50 rounded">
-            <p class="text-sm font-medium">Item yang dipesan:</p>
-            ${finalOrder.items
-              .map(
-                (item) => `
-              <p class="text-xs text-gray-600">• ${item.nama} (${item.quantity}x)</p>
-            `,
-              )
-              .join("")}
-          </div>
+        <p><strong>Jumlah Item:</strong> ${finalOrder.items.length} produk</p>
+        <p><strong>Total Quantity:</strong> ${finalOrder.totalQuantity}</p>
+        <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
+        <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
+        <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
+        <p><strong>Estimasi:</strong> 25-30 menit</p>
+        <div class="mt-3 p-2 bg-gray-50 rounded">
+          <p class="text-sm font-medium">Item yang dipesan:</p>
+          ${finalOrder.items
+            .map(
+              (item) => `<p class="text-xs text-gray-600">• ${item.nama} (${item.quantity}x)</p>`
+            )
+            .join("")}
+        </div>
       </div>
-    `
+    `;
   } else {
-    // Single item success modal (existing logic)
     orderDetails.innerHTML = `
       <div class="text-left space-y-2">
-          <p><strong>Produk:</strong> ${finalOrder.product.nama}</p>
-          <p><strong>Jumlah:</strong> ${finalOrder.quantity}</p>
-          <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
-          <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
-          <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
-          <p><strong>Estimasi:</strong> 25-30 menit</p>
+        <p><strong>Produk:</strong> ${finalOrder.product.nama}</p>
+        <p><strong>Jumlah:</strong> ${finalOrder.quantity}</p>
+        <p><strong>Total:</strong> Rp ${formatPrice(finalOrder.totalAmount)}</p>
+        <p><strong>Pembayaran:</strong> ${finalOrder.paymentMethod.toUpperCase()}</p>
+        <p><strong>Alamat:</strong> ${finalOrder.deliveryAddress}</p>
+        <p><strong>Estimasi:</strong> 25-30 menit</p>
       </div>
-    `
+    `;
   }
 
-  // Show the modal by removing hidden class
-  const modal = document.getElementById("orderSuccessModal")
-  modal.classList.remove("hidden")
+  // Tampilkan modal
+  const modal = document.getElementById("orderSuccessModal");
+  modal.classList.remove("invisible", "opacity-0", "pointer-events-none");
+  modal.classList.add("visible", "opacity-100", "pointer-events-auto");
 }
 
 function closeOrderModal() {
-  const modal = document.getElementById("orderSuccessModal")
-  modal.classList.add("hidden")
+  const modal = document.getElementById("orderSuccessModal");
+  modal.classList.add("invisible", "opacity-0", "pointer-events-none");
+  modal.classList.remove("visible", "opacity-100", "pointer-events-auto");
 
-  // Redirect to home page or order tracking page after short delay
+  // Redirect setelah 500ms
   setTimeout(() => {
-    window.location.href = "Home Page.html"
-  }, 500)
+    window.location.href = "Home Page.html";
+  }, 500);
 }
+
+
 
 // ========================================
 // ERROR HANDLING SYSTEM
