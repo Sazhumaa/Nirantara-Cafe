@@ -277,22 +277,8 @@ function addToCart(product, quantity = 1) {
   showAddToCartFeedback(item.nama_produk)
 }
 
-// Fungsi: Tampilkan feedback saat item ditambahkan ke keranjang
-function showAddToCartFeedback(productName) {
-  const notification = document.createElement("div")
-  notification.className =
-    "fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-opacity"
-  notification.textContent = `${productName} ditambahkan ke keranjang`
 
-  document.body.appendChild(notification)
 
-  setTimeout(() => {
-    notification.style.opacity = "0"
-    setTimeout(() => {
-      document.body.removeChild(notification)
-    }, 300)
-  }, 2000)
-}
 
 // ========================================
 // SISTEM UPDATE COUNTER KERANJANG
