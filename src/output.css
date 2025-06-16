@@ -1703,6 +1703,13 @@
       }
     }
   }
+  .hover\:border-green-300 {
+    &:hover {
+      @media (hover: hover) {
+        border-color: var(--color-green-300);
+      }
+    }
+  }
   .hover\:bg-\[\#D9D9D9\] {
     &:hover {
       @media (hover: hover) {
@@ -1756,6 +1763,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-gray-600);
+      }
+    }
+  }
+  .hover\:bg-green-50 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-green-50);
       }
     }
   }
@@ -1878,6 +1892,13 @@
       }
     }
   }
+  .hover\:text-green-600 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-green-600);
+      }
+    }
+  }
   .hover\:text-lime-600 {
     &:hover {
       @media (hover: hover) {
@@ -1951,6 +1972,16 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .disabled\:cursor-not-allowed {
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  .disabled\:opacity-50 {
+    &:disabled {
+      opacity: 50%;
     }
   }
   .sm\:block {
