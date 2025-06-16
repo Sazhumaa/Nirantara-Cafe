@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery - Product Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-green': '#00C851',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans select-none">
+    
+    <!-- Navigation -->
+    <nav class="pb-8 pt-10 p-10 bg-white shadow-sm">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex-1">
+                <input type="text" id="product-search" placeholder="Search Product" 
+                       class="w-full border rounded-full py-2 px-4 outline-none focus:ring-2 focus:ring-custom-green"/>
+            </div>
+            <div class="flex items-center gap-4 ml-6">
+                <div class="relative">
+                    <button onclick="toggleCart()" class="relative">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                        </svg>
+                        <span id="cart-count" class="absolute -top-1 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+                <div>
+                    <img id="navProfileImage" src="/placeholder.svg?height=40&width=40" class="w-10 h-10 rounded-full" alt="Profile" />
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Product Container -->
+    <div id="product-container" class="container mx-auto px-4 py-8">
+        <!-- Product will be loaded here -->
+    </div>
+
+    <!-- Product Description/Composition Section -->
+    <section class="bg-white mx-4 md:mx-10 mt-6 p-6 rounded-xl shadow-lg">
+        <h1 id="nama-produk" class="text-xl font-bold mb-4">Memuat produk...</h1>
+
+        <div class="tab-section">
+            <div class="tab-headers flex justify-center space-x-8 font-semibold mb-4">
+                <span id="tab-deskripsi" class="cursor-pointer text-blue-600 border-b-2 border-blue-600">Deskripsi</span>
+                <span id="tab-komposisi" class="cursor-pointer text-gray-500 hover:text-blue-600">Komposisi</span>
+            </div>
+            <div id="deskripsi" class="tab-content text-sm px-4 pb-4">Memuat deskripsi...</div>
+            <div id="komposisi" class="tab-content text-sm px-4 pb-4 hidden">Memuat komposisi...</div>
+        </div>
+    </section>
+
+    <!-- Product Recommendations -->
+    <section class="bg-white mx-4 md:mx-10 mt-6 p-6 rounded-xl shadow-lg">
+        <h2 class="text-xl font-bold mb-4">Rekomendasi Produk</h2>
+        <div id="rekomendasi-produk" class="flex flex-nowrap overflow-x-auto space-x-3 px-3 py-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 sm:space-x-0 sm:overflow-visible">
+            <!-- Recommendations will be loaded here -->
+        </div>
+    </section>
+
+    <script src="product-page.js"></script>
+</body>
+</html>

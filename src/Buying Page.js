@@ -118,8 +118,9 @@ function displayProduct(product) {
             <!-- Tombol Aksi -->
             <div class="flex space-x-3 mt-4">
               <!-- Tombol Beli Sekarang -->
-              <button id="beliBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold">Beli Sekarang</button>
-              
+              <a href="buyingPageP2.html">
+              <button id="beliBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-semibold" >Beli Sekarang</button>
+              </a>
               <!-- Tombol Tambah ke Keranjang -->
               <button id="add-to-cart" class="bg-green-500 hover:bg-green-600 p-2 rounded-lg">
                 <img src="image/shopping-cart-Puth.png" alt="Cart" class="w-6 h-6" />
@@ -179,44 +180,6 @@ function displayProduct(product) {
       quantitySpan.textContent = quantity; // Update tampilan
       updateTotalHarga(); // Update total harga
     }
-  });
-
-  // ========================================
-  // SISTEM POPUP PEMBAYARAN BERHASIL
-  // ========================================
-  // Event Listener: Tombol "Beli Sekarang"
-  // Fitur: Menampilkan popup konfirmasi pembayaran berhasil
-  document.getElementById("beliBtn").addEventListener("click", () => {
-    const popupContainer = document.getElementById("popupContainer");
-    
-    // Generate HTML untuk popup success
-    popupContainer.innerHTML = `
-      <div id="popupSuccess" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white rounded-xl shadow-lg p-6 text-center max-w-sm w-full">
-          <!-- Icon Success -->
-          <img src="image/checklist.png" alt="" class="w-20 h-auto object-center mb-3 mx-auto">
-          
-          <!-- Pesan Success -->
-          <h2 class="text-xl font-bold text-green-600 mb-2">Pembayaran Berhasil!</h2>
-          <p class="text-gray-700 mb-4">Terima kasih telah melakukan pembelian.</p>
-          
-          <!-- Tombol Tutup -->
-          <button id="closePopup" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold">Tutup</button>
-        </div>
-      </div>
-    `;
-    
-    // Event Listener: Tombol tutup popup
-    document.getElementById("closePopup").addEventListener("click", () => {
-      popupContainer.innerHTML = ''; // Hapus popup
-    });
-    
-    // Event Listener: Klik di luar popup untuk menutup
-    document.getElementById("popupSuccess").addEventListener("click", e => {
-      if (e.target.id === "popupSuccess") {
-        popupContainer.innerHTML = ''; // Hapus popup
-      }
-    });
   });
 
   // ========================================

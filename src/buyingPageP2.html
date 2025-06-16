@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery App - Jakarta Barat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-green': '#00C851',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen bg-white lg:bg-gray-50">
+        <div class="max-w-7xl mx-auto w-full lg:grid lg:grid-cols-12 lg:gap-6 lg:h-screen lg:p-6">
+            
+            <!-- Kiri: Map -->
+            <div class="lg:col-span-7 bg-white rounded-xl shadow-sm p-6">
+                
+                <!-- Header -->
+                <div class="bg-white p-4 lg:p-6 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <!-- Kiri: Judul dan deskripsi -->
+                        <div>
+                            <h1 class="text-xl font-semibold mb-1">Pengantar</h1>
+                            <p class="text-sm text-gray-600">Pengantaran selama 30 Menit</p>
+                        </div>
+                        <span class="text-sm text-blue-500 cursor-pointer hover:text-blue-600">Lihat Semua</span>
+                    </div>
+                </div>
+
+                <!-- Map Container -->
+                <div class="relative h-64 lg:h-96 rounded-lg overflow-hidden border border-gray-200">
+                    <div id="map" class="w-full h-full"></div>
+                    
+                    <!-- Loading overlay -->
+                    <div id="loading" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-custom-green mx-auto mb-2"></div>
+                            <p class="text-sm text-gray-600">Memuat peta Jakarta Barat...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Address Display -->
+                <div id="address-display" class="mt-4 bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex items-start gap-3">
+                        <div class="w-5 h-5 mt-0.5">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-500">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-900">Alamat Pengiriman</p>
+                            <p id="current-address" class="text-xs text-gray-600">Jl. Raya Cikarang Cibarusah, Cikarang Selatan</p>
+                            <p id="coordinates" class="text-xs text-gray-500">Jakarta Barat, DKI Jakarta</p>
+                        </div>
+                        <span class="text-xs text-blue-500 font-medium cursor-pointer hover:text-blue-600">DETAIL LOKASI</span>
+                    </div>
+                </div>
+
+                <!-- Area Selection -->
+                <div class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-2">
+                    <button onclick="goToArea('kebon-jeruk')" class="p-2 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                        Kebon Jeruk
+                    </button>
+                    <button onclick="goToArea('grogol')" class="p-2 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                        Grogol
+                    </button>
+                    <button onclick="goToArea('taman-sari')" class="p-2 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                        Taman Sari
+                    </button>
+                    <button onclick="goToArea('cengkareng')" class="p-2 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+                        Cengkareng
+                    </button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="mt-4">
+                    <div class="relative">
+                        <input type="text" id="address-search" placeholder="Cari alamat di Jakarta Barat..." 
+                               class="w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <button onclick="searchAddress()" class="absolute right-2 top-2 p-1 text-gray-400 hover:text-gray-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kanan: Order Details -->
+            <div class="lg:col-span-5 bg-white rounded-xl shadow-sm p-6 overflow-y-auto">
+                
+                <!-- Product Card -->
+                <div class="pb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Pesanan Anda</h2>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-5 shadow-sm">
+                        <div class="flex gap-4">
+                            <!-- Product Image -->
+                            <div class="w-20 h-20 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <div class="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M18.5 3H6c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h12.5c.8 0 1.5-.7 1.5-1.5v-15c0-.8-.7-1.5-1.5-1.5zM7 19V5h11v14H7z"/>
+                                        <circle cx="12" cy="12" r="2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Product Info -->
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-base text-gray-900">Macchiato Latte</h3>
+                                <p class="text-sm text-gray-500">Sugar level normal</p>
+                                <p class="text-sm text-gray-500">Ice level</p>
+                                <p class="font-semibold text-base mt-1 text-gray-900">Rp 10,000</p>
+                            </div>
+                            
+                            <!-- Quantity Controls -->
+                            <div class="flex items-center gap-3">
+                                <button class="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                                <span class="text-base font-medium w-8 text-center">1</span>
+                                <button class="w-10 h-10 border border-gray-300 rounded-md flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery GPS -->
+                <div class="mb-6 bg-custom-green text-white rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                                <svg class="w-5 h-5 text-custom-green" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                </svg>
+                            </div>
+                            <span class="font-medium text-lg">Delivery GPS</span>
+                        </div>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,18 15,12 9,6"></polyline>
+                        </svg>
+                    </div>
+                    <p class="text-sm mt-1 opacity-90">(GPS) Area Jakarta Barat</p>
+                </div>
+
+                <!-- Delivery Time Info -->
+                <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12,6 12,12 16,14"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-blue-900">Estimasi Pengiriman</p>
+                            <p class="text-xs text-blue-700">25-30 menit ke area Jakarta Barat</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Breakdown -->
+                <div class="pb-6">
+                    <h3 class="font-semibold text-base mb-4 text-gray-900">Ringkasan Pembayaran</h3>
+                    
+                    <div class="space-y-3 text-base">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Harga</span>
+                            <span class="text-gray-900">Rp 10,000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Biaya Pengiriman</span>
+                            <span class="text-gray-900">Rp 5,000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Biaya Pembayaran</span>
+                            <span class="text-gray-900">Rp 1,000</span>
+                        </div>
+                        <div class="flex justify-between border-t border-gray-200 pt-3">
+                            <span class="text-gray-600">Total Pembayaran</span>
+                            <span class="text-gray-900 font-semibold">Rp 16,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="pb-6">
+                    <h3 class="font-semibold text-base mb-4 text-gray-900">Pilih Metode Pembayaran</h3>
+                    
+                    <div class="space-y-3">
+                        <!-- OVO -->
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-purple-600 rounded flex items-center justify-center">
+                                    <span class="text-white text-sm font-bold">OVO</span>
+                                </div>
+                                <span class="text-base text-gray-900">OVO</span>
+                            </div>
+                            <span class="text-base text-gray-900">Rp 10,000</span>
+                        </div>
+
+                        <!-- DANA -->
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-blue-500 rounded flex items-center justify-center">
+                                    <span class="text-white text-sm font-bold">DANA</span>
+                                </div>
+                                <span class="text-base text-gray-900">DANA</span>
+                            </div>
+                            <span class="text-base text-gray-900">Rp 10,000</span>
+                        </div>
+
+                        <!-- Cash on Delivery -->
+                        <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-red-600 rounded flex items-center justify-center">
+                                    <span class="text-white text-sm font-bold">COD</span>
+                                </div>
+                                <span class="text-base text-gray-900">Bayar di Tempat</span>
+                            </div>
+                            <span class="text-base text-gray-900">Rp 10,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total and Buy Button -->
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="font-semibold text-lg text-gray-900">Pembayaran</span>
+                        <span class="font-semibold text-xl text-gray-900">Rp 19,000</span>
+                    </div>
+
+                    <button class="w-full bg-custom-green hover:bg-green-600 text-white py-4 rounded-lg font-medium text-lg transition-colors">
+                        Beli Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="buyingPageP2.js"></script>
+
+
+</body>
+</html>
